@@ -10,7 +10,7 @@
   }
 
   body {
-    @apply bg-cream-200 text-charcoal-900 font-sans;
+    @apply bg-white text-secondary-900 font-sans;
   }
 
   h1, h2, h3, h4, h5, h6 {
@@ -25,15 +25,15 @@
 
 @layer components {
   .btn-primary {
-    @apply px-8 py-4 bg-vietnam-gold text-white font-sans text-sm tracking-wider uppercase transition-all duration-300 hover:bg-vietnam-gold-600 hover:shadow-gold;
+    @apply px-8 py-4 bg-primary-600 text-white font-sans text-sm tracking-wider uppercase transition-all duration-300 hover:bg-primary-700 shadow-lg;
   }
 
   .btn-secondary {
-    @apply px-8 py-4 border-2 border-vietnam-gold text-vietnam-gold font-sans text-sm tracking-wider uppercase transition-all duration-300 hover:bg-vietnam-gold hover:text-white;
+    @apply px-8 py-4 border-2 border-primary-600 text-primary-600 font-sans text-sm tracking-wider uppercase transition-all duration-300 hover:bg-primary-600 hover:text-white;
   }
 
   .btn-outline {
-    @apply px-6 py-3 border border-charcoal-300 text-charcoal-700 font-sans text-sm tracking-wide transition-all duration-300 hover:border-vietnam-gold hover:text-vietnam-gold;
+    @apply px-6 py-3 border border-secondary-300 text-secondary-700 font-sans text-sm tracking-wide transition-all duration-300 hover:border-primary-600 hover:text-primary-600;
   }
 
   .card {
@@ -41,12 +41,12 @@
   }
 
   .section-title {
-    @apply text-4xl md:text-5xl lg:text-6xl font-serif text-charcoal-900 mb-6;
+    @apply text-4xl md:text-5xl lg:text-6xl font-serif text-secondary-900 mb-6;
     letter-spacing: -0.02em;
   }
 
   .section-subtitle {
-    @apply text-lg md:text-xl text-charcoal-500 leading-relaxed;
+    @apply text-lg md:text-xl text-secondary-500 leading-relaxed;
   }
 }
 
