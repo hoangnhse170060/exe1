@@ -87,7 +87,7 @@ export default function Sidebar({ currentPage, onNavigate }: SidebarProps) {
                   >
                     {item.label}
                   </button>
-                  {'subItems' in item && (
+                  {'subItems' in item && item.subItems && (
                     <div className="ml-4 mt-1.5 space-y-1">
                       {item.subItems.map((subItem) => (
                         <button

@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { MapPin, Calendar, Users } from 'lucide-react';
+import { MapPin, Calendar } from 'lucide-react';
 import { useScrollAnimation } from '../hooks/useScrollAnimation';
 
 export default function History() {
