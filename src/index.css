@@ -10,43 +10,42 @@
   }
 
   body {
-    @apply bg-cream-200 text-charcoal-900 font-sans;
+    @apply bg-sand-50 text-charcoal-900 font-sans;
   }
 
   h1, h2, h3, h4, h5, h6 {
     @apply font-serif;
-    letter-spacing: -0.02em;
+    letter-spacing: -0.015em;
+    line-height: 1.2;
   }
 
   p {
-    @apply leading-relaxed;
+    line-height: 1.65;
   }
 }
 
 @layer components {
   .btn-primary {
-    @apply px-8 py-4 bg-vietnam-gold text-white font-sans text-sm tracking-wider uppercase transition-all duration-300 hover:bg-vietnam-gold-600 hover:shadow-gold;
+    @apply px-10 py-4 bg-bronze text-white text-sm tracking-[0.1em] uppercase font-medium transition-all duration-300;
+    @apply hover:bg-bronze-600 hover:shadow-bronze;
   }
 
   .btn-secondary {
-    @apply px-8 py-4 border-2 border-vietnam-gold text-vietnam-gold font-sans text-sm tracking-wider uppercase transition-all duration-300 hover:bg-vietnam-gold hover:text-white;
+    @apply px-10 py-4 border-2 border-charcoal-800 text-charcoal-800 text-sm tracking-[0.1em] uppercase font-medium;
+    @apply transition-all duration-300 hover:bg-charcoal-800 hover:text-white;
   }
 
-  .btn-outline {
-    @apply px-6 py-3 border border-charcoal-300 text-charcoal-700 font-sans text-sm tracking-wide transition-all duration-300 hover:border-vietnam-gold hover:text-vietnam-gold;
+  .card-premium {
+    @apply bg-white rounded-none shadow-elegant transition-all duration-500;
+    @apply hover:shadow-elegant-lg hover:-translate-y-1;
   }
 
-  .card {
-    @apply bg-white rounded-sm shadow-soft transition-all duration-300 hover:shadow-medium;
+  .section-heading {
+    @apply text-5xl md:text-6xl lg:text-7xl font-serif text-charcoal-900 tracking-tight;
   }
 
-  .section-title {
-    @apply text-4xl md:text-5xl lg:text-6xl font-serif text-charcoal-900 mb-6;
-    letter-spacing: -0.02em;
-  }
-
-  .section-subtitle {
-    @apply text-lg md:text-xl text-charcoal-500 leading-relaxed;
+  .section-subheading {
+    @apply text-lg md:text-xl text-charcoal-600 leading-relaxed;
   }
 }
 
@@ -55,153 +54,37 @@
     text-wrap: balance;
   }
 
-  .parallax-bg {
+  .parallax {
     background-attachment: fixed;
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
   }
 
-  .gradient-overlay {
+  .overlay-gradient {
     position: relative;
   }
 
-  .gradient-overlay::before {
+  .overlay-gradient::before {
     content: '';
     position: absolute;
     inset: 0;
-    background: linear-gradient(to bottom, rgba(0,0,0,0.4), rgba(0,0,0,0.6));
+    background: linear-gradient(to bottom, rgba(28, 28, 28, 0.3), rgba(28, 28, 28, 0.65));
     pointer-events: none;
   }
 
-  .glass-effect {
-    @apply bg-white/80 backdrop-blur-md;
+  .text-shadow-premium {
+    text-shadow: 0 2px 12px rgba(0, 0, 0, 0.25);
   }
 
-  .text-shadow-sm {
-    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
-  }
-
-  .text-shadow-md {
-    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-  }
-
-  .text-shadow-lg {
-    text-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-  }
-
-  .sidebar-elegant {
-    background: linear-gradient(180deg, #FAF9F7 0%, #F0E6D2 100%);
-    backdrop-filter: blur(8px);
-    box-shadow: 2px 0 30px rgba(0, 0, 0, 0.08), 0 0 60px rgba(203, 162, 106, 0.1);
-    border-top-right-radius: 20px;
-    border-bottom-right-radius: 20px;
-    border-right: 1px solid rgba(203, 162, 106, 0.15);
-    position: relative;
-  }
-
-  .sidebar-elegant::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background-image:
-      repeating-linear-gradient(
-        0deg,
-        transparent,
-        transparent 2px,
-        rgba(203, 162, 106, 0.015) 2px,
-        rgba(203, 162, 106, 0.015) 4px
-      ),
-      repeating-linear-gradient(
-        90deg,
-        transparent,
-        transparent 2px,
-        rgba(203, 162, 106, 0.015) 2px,
-        rgba(203, 162, 106, 0.015) 4px
-      );
-    pointer-events: none;
-    border-top-right-radius: 20px;
-    border-bottom-right-radius: 20px;
-  }
-
-  .vietnam-map-bg {
-    position: absolute;
-    inset: 0;
-    opacity: 0.03;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 600'%3E%3Cpath d='M100 20 Q95 25 92 35 L88 50 Q85 65 83 80 L80 100 Q78 115 75 130 L72 150 Q70 165 68 180 L65 200 Q63 220 60 240 L58 260 Q56 280 55 300 L53 330 Q52 350 52 370 L52 400 Q53 420 55 440 L58 460 Q62 480 68 495 L75 510 Q82 520 88 525' fill='none' stroke='%23000000' stroke-width='1.5'/%3E%3Ccircle cx='75' cy='60' r='8' fill='%23000000'/%3E%3Ccircle cx='85' cy='85' r='6' fill='%23000000'/%3E%3Ccircle cx='65' cy='100' r='5' fill='%23000000'/%3E%3Cellipse cx='45' cy='140' rx='12' ry='8' fill='%23000000'/%3E%3Cellipse cx='35' cy='180' rx='10' ry='7' fill='%23000000'/%3E%3C/svg%3E");
-    background-repeat: no-repeat;
-    background-position: center center;
-    background-size: 180px auto;
-    pointer-events: none;
-  }
-
-  .menu-item-elegant {
-    position: relative;
-    display: inline-block;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  }
-
-  .menu-item-elegant::after {
-    content: '';
-    position: absolute;
-    bottom: -2px;
-    left: 0;
-    width: 0;
-    height: 2px;
-    background: linear-gradient(90deg, #CBA26A 0%, #D4B17E 100%);
-    transition: width 0.35s cubic-bezier(0.4, 0, 0.2, 1);
-    box-shadow: 0 1px 4px rgba(203, 162, 106, 0.3);
-  }
-
-  .menu-item-elegant:hover {
-    transform: translateX(4px);
-  }
-
-  .menu-item-elegant:hover::after {
-    width: 100%;
-  }
-
-  .menu-item-active-elegant {
-    font-weight: 600;
-  }
-
-  .menu-item-active-elegant::after {
-    content: '';
-    position: absolute;
-    bottom: -2px;
-    left: 0;
-    width: 100%;
-    height: 2px;
-    background: linear-gradient(90deg, #CBA26A 0%, #D4B17E 100%);
-    box-shadow: 0 1px 4px rgba(203, 162, 106, 0.3);
-  }
-
-  .sidebar-fade-in {
-    animation: sidebarFadeIn 0.5s ease-out forwards;
-  }
-
-  @keyframes sidebarFadeIn {
-    from {
-      opacity: 0;
-      transform: translateX(-20px);
-    }
-    to {
-      opacity: 1;
-      transform: translateX(0);
-    }
-  }
-
-  .vietnam-map-fade {
-    animation: mapFadeIn 0.8s ease-out 0.2s forwards;
+  .animate-on-scroll {
     opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.8s ease-out, transform 0.8s ease-out;
   }
 
-  @keyframes mapFadeIn {
-    from {
-      opacity: 0;
-    }
-    to {
-      opacity: 0.12;
-    }
+  .animate-on-scroll.visible {
+    opacity: 1;
+    transform: translateY(0);
   }
 }
