@@ -1,293 +1,365 @@
-import { useState, useEffect } from "react";
-import { motion } from "motion/react";
-import { ImageWithFallback } from "./figma/ImageWithFallback";
-import { Button } from "./ui/button";
-import { ArrowRight } from "lucide-react";
+import { useEffect, useState } from 'react';
+import { ChevronDown, Globe, Heart, BookOpen, ArrowRight, Star } from 'lucide-react';
+import { useScrollAnimation } from '../hooks/useScrollAnimation';
 
-export function HomePage() {
-  const [scrollY, setScrollY] = useState(0);
+type HomeProps = {
+  onNavigate: (page: string) => void;
+};
+
+export default function Home({ onNavigate }: HomeProps) {
+  useScrollAnimation();
+  const [isScrolled, setIsScrolled] = useState(false);
 
   useEffect(() => {
-    const handleScroll = () => setScrollY(window.scrollY);
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 50);
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
   return (
-    <div className="min-h-screen">
-      {/* Hero Section */}
-      <section className="relative h-screen flex items-center justify-center overflow-hidden">
-        {/* Parallax Background */}
-        <motion.div 
-          className="absolute inset-0"
-          style={{ y: scrollY * 0.5 }}
-        >
-          <ImageWithFallback
-            src="https://images.unsplash.com/photo-1758182042983-e87a6fc89053?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHx2aWV0bmFtJTIwZmxhZyUyMGhlcml0YWdlfGVufDF8fHx8MTc2MTE4MDIzM3ww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral"
-            alt="Vietnam Heritage"
-            className="w-full h-full object-cover scale-110"
-          />
-          <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-black/60 to-background/90" />
-        </motion.div>
+    <div className="relative min-h-screen bg-cream-200 lg:pt-0 pt-[70px]">
+      <section className="relative h-screen bg-cover bg-center bg-no-repeat gradient-overlay" style={{
+        backgroundImage: 'url(https://images.pexels.com/photos/672532/pexels-photo-672532.jpeg)',
+      }}>
 
-        {/* Decorative Elements */}
-        <div className="absolute inset-0 pointer-events-none">
-          {/* Top decorative pattern */}
-          <motion.div 
-            initial={{ opacity: 0, y: -50 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.5, duration: 1 }}
-            className="absolute top-8 left-1/2 -translate-x-1/2"
-          >
-            <svg viewBox="0 0 200 100" className="w-48 h-24 text-primary/20" fill="currentColor">
-              <path d="M10 50 Q 50 20, 100 50 T 190 50" stroke="currentColor" strokeWidth="1" fill="none" opacity="0.5"/>
-              <circle cx="100" cy="50" r="3" />
-              <circle cx="40" cy="40" r="2" opacity="0.7"/>
-              <circle cx="160" cy="40" r="2" opacity="0.7"/>
-            </svg>
-          </motion.div>
-
-          {/* Vietnamese pattern decorations */}
-          <motion.div
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ delay: 0.8, duration: 1 }}
-            className="absolute top-1/4 left-12 w-32 h-32 opacity-10"
-          >
-            <svg viewBox="0 0 100 100" className="w-full h-full text-primary" fill="currentColor">
-              <circle cx="50" cy="50" r="45" fill="none" stroke="currentColor" strokeWidth="0.5"/>
-              <circle cx="50" cy="50" r="35" fill="none" stroke="currentColor" strokeWidth="0.5"/>
-              <circle cx="50" cy="50" r="25" fill="none" stroke="currentColor" strokeWidth="0.5"/>
-              <path d="M50 5 L50 95 M5 50 L95 50" stroke="currentColor" strokeWidth="0.5" opacity="0.5"/>
-            </svg>
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ delay: 1, duration: 1 }}
-            className="absolute bottom-1/4 right-12 w-40 h-40 opacity-10"
-          >
-            <svg viewBox="0 0 100 100" className="w-full h-full text-primary" fill="currentColor">
-              <path d="M50 10 L55 40 L85 40 L62 58 L70 88 L50 70 L30 88 L38 58 L15 40 L45 40 Z" opacity="0.6"/>
-            </svg>
-          </motion.div>
-        </div>
-
-        <motion.div 
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1 }}
-          className="relative z-10 text-center px-8 max-w-6xl"
-        >
-          {/* Decorative Header with Clock Icon */}
-          <motion.div 
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ delay: 0.3, duration: 0.8 }}
-            className="mb-12"
-          >
-            <div className="inline-block mb-8">
-              <div className="flex items-center gap-6 mb-8">
-                <motion.div 
-                  animate={{ width: [0, 80] }}
-                  transition={{ delay: 0.5, duration: 0.8 }}
-                  className="h-px bg-gradient-to-r from-transparent to-primary"
-                />
-                
-                {/* Clock Icon */}
-                <motion.div
-                  animate={{ rotate: 360 }}
-                  transition={{ delay: 0.8, duration: 2, ease: "easeInOut" }}
-                >
-                  <svg viewBox="0 0 60 60" className="w-16 h-16 text-primary drop-shadow-[0_0_15px_rgba(139,105,20,0.5)]">
-                    <circle cx="30" cy="30" r="28" fill="none" stroke="currentColor" strokeWidth="2" opacity="0.3"/>
-                    <circle cx="30" cy="30" r="24" fill="none" stroke="currentColor" strokeWidth="1.5" opacity="0.5"/>
-                    <path d="M30 10 L30 30 L45 40" stroke="currentColor" strokeWidth="2.5" fill="none" strokeLinecap="round" strokeLinejoin="round"/>
-                    <circle cx="30" cy="30" r="3" fill="currentColor"/>
-                    {/* Hour marks */}
-                    <circle cx="30" cy="8" r="1.5" fill="currentColor" opacity="0.6"/>
-                    <circle cx="30" cy="52" r="1.5" fill="currentColor" opacity="0.6"/>
-                    <circle cx="8" cy="30" r="1.5" fill="currentColor" opacity="0.6"/>
-                    <circle cx="52" cy="30" r="1.5" fill="currentColor" opacity="0.6"/>
-                  </svg>
-                </motion.div>
-                
-                <motion.div 
-                  animate={{ width: [0, 80] }}
-                  transition={{ delay: 0.5, duration: 0.8 }}
-                  className="h-px bg-gradient-to-l from-transparent to-primary"
-                />
-              </div>
-            </div>
-            
-            <motion.h1 
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.6, duration: 0.8 }}
-              className="text-6xl md:text-8xl text-white mb-4 tracking-wider drop-shadow-2xl" 
-              style={{ fontFamily: 'serif' }}
-            >
+        <div className="relative z-10 flex flex-col items-center justify-center h-full px-4">
+          <div className="text-center max-w-5xl animate-fade-in-up">
+            <h1 className="text-6xl sm:text-7xl md:text-8xl lg:text-9xl font-display font-bold tracking-tight text-white mb-8 text-shadow-lg">
               Echoes of Viet Nam
-            </motion.h1>
-            
-            <motion.div 
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 1, duration: 0.8 }}
-              className="flex items-center justify-center gap-3 mb-12"
-            >
-              <motion.div 
-                animate={{ scale: [1, 1.2, 1] }}
-                transition={{ repeat: Infinity, duration: 2, delay: 0 }}
-                className="w-2 h-2 bg-primary rounded-full shadow-[0_0_10px_rgba(139,105,20,0.8)]" 
-              />
-              <motion.div 
-                animate={{ scale: [1, 1.2, 1] }}
-                transition={{ repeat: Infinity, duration: 2, delay: 0.3 }}
-                className="w-2 h-2 bg-primary rounded-full shadow-[0_0_10px_rgba(139,105,20,0.8)]" 
-              />
-              <motion.div 
-                animate={{ scale: [1, 1.2, 1] }}
-                transition={{ repeat: Infinity, duration: 2, delay: 0.6 }}
-                className="w-2 h-2 bg-primary rounded-full shadow-[0_0_10px_rgba(139,105,20,0.8)]" 
-              />
-            </motion.div>
-          </motion.div>
+            </h1>
 
-          {/* Welcome Message */}
-          <motion.div 
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.9, duration: 0.8 }}
-            className="space-y-6 mb-12"
-          >
-            <p className="text-3xl md:text-4xl text-white/90" style={{ fontFamily: 'serif' }}>
+            <div className="flex items-center justify-center space-x-2.5 mb-10">
+              <div className="w-2.5 h-2.5 rounded-full bg-vietnam-gold-400 animate-pulse"></div>
+              <div className="w-2.5 h-2.5 rounded-full bg-vietnam-gold-400 animate-pulse" style={{ animationDelay: '0.2s' }}></div>
+              <div className="w-2.5 h-2.5 rounded-full bg-vietnam-gold-400 animate-pulse" style={{ animationDelay: '0.4s' }}></div>
+            </div>
+
+            <p className="text-xl sm:text-2xl md:text-3xl text-white/95 mb-5 font-serif text-shadow-md">
               Chào mừng bạn đến với
             </p>
-            <h2 className="text-4xl md:text-6xl text-primary tracking-wide drop-shadow-[0_0_20px_rgba(139,105,20,0.6)]" style={{ fontFamily: 'serif' }}>
+
+            <h2 className="text-4xl sm:text-5xl md:text-6xl font-serif text-vietnam-gold-300 mb-10 text-shadow-md">
               Thế Giới Lịch Sử Việt Nam
             </h2>
-          </motion.div>
 
-          <motion.p 
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 1.2, duration: 0.8 }}
-            className="text-xl text-white/80 mb-12 max-w-3xl mx-auto leading-relaxed"
-          >
-            Hành trình khám phá những dấu ấn lịch sử hào hùng, từ những ngày đấu tranh giành độc lập 
-            đến thời đại xây dựng và phát triển đất nước
-          </motion.p>
+            <p className="text-base sm:text-lg md:text-xl text-white/90 mb-14 max-w-3xl mx-auto leading-loose text-balance">
+              Hành trình khám phá những dấu ấn lịch sử hào hùng, từ những ngày đầu tranh giành
+              độc lập đến thời đại xây dựng và phát triển đất nước
+            </p>
 
-          <motion.div 
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 1.4, duration: 0.8 }}
-            className="flex flex-wrap gap-4 justify-center"
-          >
-            <Button size="lg" className="bg-primary hover:bg-primary/90 text-white gap-2 px-10 py-6 rounded-sm shadow-[0_0_20px_rgba(139,105,20,0.4)] hover:shadow-[0_0_30px_rgba(139,105,20,0.6)] transition-all">
-              Bắt Đầu Khám Phá <ArrowRight className="w-5 h-5" />
-            </Button>
-            <Button size="lg" variant="outline" className="border-white/30 text-white hover:bg-white/10 rounded-sm px-10 py-6 backdrop-blur-sm">
-              Tìm Hiểu Thêm
-            </Button>
-          </motion.div>
-        </motion.div>
-
-        {/* Side Decorative Indicators */}
-        <motion.div 
-          initial={{ opacity: 0, x: 50 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ delay: 1.5, duration: 0.8 }}
-          className="absolute right-8 top-1/2 -translate-y-1/2 flex flex-col gap-3"
-        >
-          <motion.div 
-            animate={{ y: [0, -5, 0] }}
-            transition={{ repeat: Infinity, duration: 2 }}
-            className="w-px h-12 bg-gradient-to-b from-transparent via-primary to-transparent"
-          />
-          <div className="w-2 h-2 bg-primary rounded-full shadow-[0_0_8px_rgba(139,105,20,0.8)]" />
-          <div className="w-2 h-2 bg-white/50 rounded-full" />
-          <div className="w-2 h-2 bg-white/30 rounded-full" />
-        </motion.div>
-
-        {/* Decorative scroll indicator */}
-        <motion.div 
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 2, duration: 0.8 }}
-          className="absolute bottom-12 left-1/2 -translate-x-1/2"
-        >
-          <motion.div
-            animate={{ y: [0, 10, 0] }}
-            transition={{ repeat: Infinity, duration: 2 }}
-          >
-            <div className="w-6 h-10 border-2 border-white/40 rounded-full flex items-start justify-center p-2">
-              <motion.div 
-                animate={{ y: [0, 12, 0] }}
-                transition={{ repeat: Infinity, duration: 2 }}
-                className="w-1.5 h-3 bg-white/60 rounded-full"
-              />
+            <div className="flex flex-wrap justify-center gap-5">
+              <button
+                onClick={() => onNavigate('history')}
+                className="group px-10 py-5 bg-vietnam-gold text-white font-sans text-sm tracking-[0.15em] uppercase hover:bg-vietnam-gold-600 transition-all duration-300 flex items-center space-x-3 shadow-strong hover:shadow-gold"
+              >
+                <span>Bắt Đầu Khám Phá</span>
+                <ArrowRight className="transition-transform duration-300 group-hover:translate-x-1" size={20} />
+              </button>
+              <button
+                className="px-10 py-5 bg-white/10 backdrop-blur-sm border-2 border-white text-white font-sans text-sm tracking-[0.15em] uppercase hover:bg-white hover:text-charcoal-900 transition-all duration-300"
+              >
+                Tìm Hiểu Thêm
+              </button>
             </div>
-          </motion.div>
-          <p className="text-white/60 text-xs mt-3 tracking-wider">SCROLL</p>
-        </motion.div>
+          </div>
+
+        </div>
       </section>
 
-      {/* Mission Section */}
-      <section className="py-32 bg-background relative overflow-hidden">
-        <div className="absolute inset-0 opacity-5">
-          <div className="absolute top-20 left-10 w-64 h-64 border border-primary/30 rounded-full" />
-          <div className="absolute bottom-20 right-10 w-96 h-96 border border-primary/30 rounded-full" />
+      <section className="relative py-24 lg:py-32 px-4 bg-cream-50">
+        <div className="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+          <div className="w-20 h-1 bg-vietnam-gold shadow-gold"></div>
         </div>
-        
-        <div className="container mx-auto px-8 relative">
-          <div className="max-w-4xl mx-auto text-center">
-            <div className="w-16 h-1 bg-primary mx-auto mb-8" />
-            <h2 className="text-5xl mb-8" style={{ fontFamily: 'serif' }}>
-              Sứ Mệnh Của Chúng Tôi
-            </h2>
-            <p className="text-xl text-muted-foreground leading-relaxed mb-8">
-              Echoes of Viet Nam được thành lập với sứ mệnh lưu giữ và lan tỏa những giá trị lịch sử quý báu 
-              của dân tộc Việt Nam. Chúng tôi tin rằng, thông qua việc tìm hiểu quá khứ, thế hệ trẻ sẽ hiểu rõ hơn 
-              về nguồn gốc, truyền thống và tự hào về bản sắc văn hóa của mình.
+
+        <div className="max-w-6xl mx-auto text-center mb-20 scroll-animate">
+          <h2 className="section-title text-charcoal-900">
+            Sứ Mệnh Của Chúng Tôi
+          </h2>
+          <div className="w-16 h-1 bg-vietnam-gold mx-auto mb-8"></div>
+          <p className="section-subtitle max-w-4xl mx-auto text-balance">
+            Echoes of Việt Nam được thành lập với sứ mệnh lưu giữ và lan tỏa những giá trị lịch sử quý báu của dân
+            tộc Việt Nam. Chúng tôi tin rằng, thông qua việc tìm hiểu quá khứ, thế hệ trẻ sẽ hiểu rõ hơn về nguồn
+            gốc, truyền thống và tự hào về bản sắc văn hóa của mình.
+          </p>
+        </div>
+
+        <div className="max-w-6xl mx-auto grid md:grid-cols-3 gap-10">
+          <div className="card p-10 fade-scroll group hover:scale-105 transition-transform duration-300">
+            <div className="w-16 h-16 bg-vietnam-gold-100 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:bg-vietnam-gold transition-colors duration-300">
+              <BookOpen className="text-vietnam-gold group-hover:text-white transition-colors duration-300" size={32} />
+            </div>
+            <h3 className="text-2xl font-serif text-charcoal-900 mb-4">Giáo Dục</h3>
+            <p className="text-charcoal-600 leading-relaxed">
+              Cung cấp kiến thức lịch sử chính xác và sinh động qua các nội dung được nghiên cứu kỹ lưỡng
             </p>
-            <div className="grid md:grid-cols-3 gap-8 mt-16">
-              <div className="p-6 border border-border rounded-lg hover:border-primary/50 transition-colors">
-                <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <svg className="w-6 h-6 text-primary" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
-                    <path d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
-                  </svg>
-                </div>
-                <h3 className="text-xl mb-3">Giáo Dục</h3>
-                <p className="text-muted-foreground text-sm">
-                  Cung cấp kiến thức lịch sử chính xác và sinh động
-                </p>
+          </div>
+
+          <div className="card p-10 fade-scroll group hover:scale-105 transition-transform duration-300">
+            <div className="w-16 h-16 bg-vietnam-gold-100 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:bg-vietnam-gold transition-colors duration-300">
+              <Globe className="text-vietnam-gold group-hover:text-white transition-colors duration-300" size={32} />
+            </div>
+            <h3 className="text-2xl font-serif text-charcoal-900 mb-4">Lan Tỏa</h3>
+            <p className="text-charcoal-600 leading-relaxed">
+              Kết nối và xây dựng cộng đồng yêu lịch sử, văn hóa Việt Nam trên khắp thế giới
+            </p>
+          </div>
+
+          <div className="card p-10 fade-scroll group hover:scale-105 transition-transform duration-300">
+            <div className="w-16 h-16 bg-vietnam-gold-100 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:bg-vietnam-gold transition-colors duration-300">
+              <Heart className="text-vietnam-gold group-hover:text-white transition-colors duration-300" size={32} />
+            </div>
+            <h3 className="text-2xl font-serif text-charcoal-900 mb-4">Lưu Giữ</h3>
+            <p className="text-charcoal-600 leading-relaxed">
+              Bảo tồn và gìn giữ di sản văn hóa quý báu cho thế hệ tương lai
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section className="relative py-24 lg:py-32 px-4 bg-white">
+        <div className="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+          <div className="w-20 h-1 bg-vietnam-gold shadow-gold"></div>
+        </div>
+
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center mb-20 scroll-animate">
+            <h2 className="section-title">
+              Dòng Chảy Lịch Sử
+            </h2>
+            <div className="w-16 h-1 bg-vietnam-gold mx-auto mb-6"></div>
+            <p className="section-subtitle">
+              Hành trình đấu tranh giành độc lập và bảo vệ Tổ quốc của dân tộc Việt Nam
+            </p>
+          </div>
+
+          <div className="flex items-center justify-center mb-16 scroll-animate">
+            <button className="w-14 h-14 rounded-full border-2 border-vietnam-gold text-vietnam-gold flex items-center justify-center hover:bg-vietnam-gold hover:text-white transition-all duration-300 shadow-soft hover:shadow-gold">
+              <ChevronDown className="rotate-90" size={24} />
+            </button>
+
+            <div className="flex items-center mx-12">
+              <div className="w-14 h-14 rounded-full bg-gradient-gold flex items-center justify-center text-white font-bold shadow-gold text-lg">
+                1
               </div>
-              <div className="p-6 border border-border rounded-lg hover:border-primary/50 transition-colors">
-                <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <svg className="w-6 h-6 text-primary" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
-                    <path d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9" />
-                  </svg>
-                </div>
-                <h3 className="text-xl mb-3">Lan Tỏa</h3>
-                <p className="text-muted-foreground text-sm">
-                  Kết nối cộng đồng yêu lịch sử Việt Nam
-                </p>
-              </div>
-              <div className="p-6 border border-border rounded-lg hover:border-primary/50 transition-colors">
-                <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <svg className="w-6 h-6 text-primary" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
-                    <path d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
-                  </svg>
-                </div>
-                <h3 className="text-xl mb-3">Lưu Giữ</h3>
-                <p className="text-muted-foreground text-sm">
-                  Bảo tồn di sản văn hóa cho thế hệ tương lai
-                </p>
+              <div className="w-32 h-0.5 bg-gradient-to-r from-vietnam-gold to-charcoal-200 mx-6"></div>
+              <div className="w-14 h-14 rounded-full border-2 border-charcoal-200 flex items-center justify-center text-charcoal-400 font-bold text-lg">
+                2
               </div>
             </div>
+
+            <button className="w-14 h-14 rounded-full border-2 border-vietnam-gold text-vietnam-gold flex items-center justify-center hover:bg-vietnam-gold hover:text-white transition-all duration-300 shadow-soft hover:shadow-gold">
+              <ChevronDown className="rotate-[-90deg]" size={24} />
+            </button>
+          </div>
+
+          <p className="text-center text-charcoal-700 mb-16 font-serif text-xl tracking-wide">1945 - 1954</p>
+
+          <div className="grid lg:grid-cols-2 gap-16 items-center fade-scroll">
+            <div className="space-y-8">
+              <div className="inline-block px-5 py-2 bg-vietnam-gold-100 text-vietnam-gold-800 text-sm font-semibold tracking-wide">
+                1945 - 1954
+              </div>
+              <h3 className="text-4xl lg:text-5xl font-serif text-charcoal-900 leading-tight">
+                Kháng Chiến Chống Pháp
+              </h3>
+              <p className="text-charcoal-600 text-lg leading-loose">
+                Cuộc kháng chiến vĩ đại của nhân dân Việt Nam chống lại thực dân
+                Pháp, khẳng định quyết tự do và độc lập của dân tộc.
+              </p>
+
+              <div className="space-y-4 pl-4 border-l-2 border-vietnam-gold-300">
+                <div className="flex items-start space-x-4">
+                  <div className="w-3 h-3 rounded-full bg-vietnam-gold mt-2 flex-shrink-0 shadow-gold"></div>
+                  <p className="text-charcoal-700 text-lg">Tổng khởi nghĩa tháng 8/1945</p>
+                </div>
+                <div className="flex items-start space-x-4">
+                  <div className="w-3 h-3 rounded-full bg-vietnam-gold mt-2 flex-shrink-0 shadow-gold"></div>
+                  <p className="text-charcoal-700 text-lg">Tuyên ngôn độc lập 2/9/1945</p>
+                </div>
+                <div className="flex items-start space-x-4">
+                  <div className="w-3 h-3 rounded-full bg-vietnam-gold mt-2 flex-shrink-0 shadow-gold"></div>
+                  <p className="text-charcoal-700 text-lg">Chiến thắng Điện Biên Phủ 1954</p>
+                </div>
+              </div>
+
+              <button
+                onClick={() => onNavigate('history')}
+                className="group btn-primary flex items-center space-x-3 mt-8"
+              >
+                <span>Tìm Hiểu Chi Tiết</span>
+                <ArrowRight className="transition-transform duration-300 group-hover:translate-x-1" size={20} />
+              </button>
+            </div>
+
+            <div className="relative group">
+              <div className="absolute -inset-4 bg-gradient-gold opacity-20 blur-xl group-hover:opacity-30 transition-opacity duration-500"></div>
+              <img
+                src="https://images.pexels.com/photos/1670723/pexels-photo-1670723.jpeg"
+                alt="Kháng Chiến Chống Pháp"
+                className="relative w-full h-[500px] object-cover shadow-strong group-hover:shadow-gold transition-all duration-500"
+              />
+              <div className="absolute bottom-6 right-6 bg-charcoal-900/90 backdrop-blur-sm text-white px-6 py-3 font-serif text-lg">
+                1945 - 1954
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="relative py-24 lg:py-32 px-4 bg-cream-50">
+        <div className="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+          <div className="w-20 h-1 bg-vietnam-gold shadow-gold"></div>
+        </div>
+
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center mb-20 scroll-animate">
+            <h2 className="section-title">
+              Cửa Hàng Lưu Niệm
+            </h2>
+            <div className="w-16 h-1 bg-vietnam-gold mx-auto mb-6"></div>
+            <p className="section-subtitle">
+              Sản phẩm lưu niệm lịch sử độc đáo từ các đối tác uy tín
+            </p>
+          </div>
+
+          <div className="flex flex-wrap justify-center gap-3 mb-16 scroll-animate">
+            <button className="px-7 py-3 bg-vietnam-gold text-white font-sans text-sm tracking-wide shadow-soft hover:shadow-gold transition-all duration-300">
+              Tất Cả
+            </button>
+            <button className="btn-outline">
+              Đồ Trang Trí
+            </button>
+            <button className="btn-outline">
+              Thời Trang
+            </button>
+            <button className="btn-outline">
+              Phụ Kiện
+            </button>
+            <button className="btn-outline">
+              Sách
+            </button>
+            <button className="btn-outline">
+              Nghệ Thuật
+            </button>
+            <button className="btn-outline">
+              Đồ Dùng
+            </button>
+          </div>
+
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-10">
+            {[
+              { category: 'Đồ Trang Trí', tag: 'Bán Chạy' },
+              { category: 'Thời Trang', tag: 'Mới' },
+              { category: 'Phụ Kiện', tag: 'Độc Quyền' }
+            ].map((item, index) => (
+              <div
+                key={index}
+                className="card group cursor-pointer overflow-hidden fade-scroll"
+                onClick={() => onNavigate('shop')}
+              >
+                <div className="relative h-96 overflow-hidden bg-charcoal-100">
+                  <img
+                    src="https://images.pexels.com/photos/1040945/pexels-photo-1040945.jpeg"
+                    alt="Sản phẩm lưu niệm"
+                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-charcoal-900/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                  <div className="absolute top-5 left-5">
+                    <span className="bg-vietnam-red text-white px-4 py-1.5 text-xs font-sans tracking-wide shadow-soft">
+                      {item.category}
+                    </span>
+                  </div>
+                  <div className="absolute top-5 right-5">
+                    <span className="bg-vietnam-gold text-white px-4 py-1.5 text-xs font-sans tracking-wide shadow-soft">
+                      {item.tag}
+                    </span>
+                  </div>
+                  <div className="absolute bottom-5 right-5 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                    <button className="w-12 h-12 bg-white rounded-full flex items-center justify-center shadow-medium hover:shadow-strong transition-all duration-300">
+                      <ArrowRight className="text-charcoal-900" size={20} />
+                    </button>
+                  </div>
+                </div>
+                <div className="p-8">
+                  <p className="text-vietnam-gold-700 text-xs font-sans mb-3 uppercase tracking-[0.15em] font-semibold">
+                    {item.category}
+                  </p>
+                  <h3 className="text-2xl font-serif text-charcoal-900 mb-4 group-hover:text-vietnam-gold transition-colors duration-300">
+                    Tranh Nghệ Thuật Cách Mạng
+                  </h3>
+                  <p className="text-charcoal-600 mb-5 leading-relaxed">
+                    Tranh tái hiện những khoảnh khắc lịch sử hào hùng của dân tộc
+                  </p>
+                  <div className="flex items-center justify-between">
+                    <p className="text-3xl font-serif text-vietnam-gold-700">500.000₫</p>
+                    <div className="flex items-center space-x-1 text-vietnam-gold">
+                      <Star size={16} fill="currentColor" />
+                      <Star size={16} fill="currentColor" />
+                      <Star size={16} fill="currentColor" />
+                      <Star size={16} fill="currentColor" />
+                      <Star size={16} fill="currentColor" />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          <div className="text-center mt-16">
+            <button
+              onClick={() => onNavigate('shop')}
+              className="btn-secondary"
+            >
+              Xem Tất Cả Sản Phẩm
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <section className="relative py-24 lg:py-32 px-4 bg-gradient-gold">
+        <div className="max-w-5xl mx-auto text-center text-white fade-scroll">
+          <div className="w-20 h-20 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center mx-auto mb-8 animate-float">
+            <BookOpen className="text-white" size={40} />
+          </div>
+          <h2 className="text-4xl md:text-5xl font-serif mb-8">
+            Bạn Là Người Bán?
+          </h2>
+          <p className="text-xl mb-12 max-w-3xl mx-auto leading-loose text-white/95">
+            Đăng ký ngay để bán sản phẩm lưu niệm lịch sử của bạn trên nền tảng Echoes of
+            Việt Nam. Tiếp cận hàng nghìn khách hàng yêu thích lịch sử và văn hóa Việt Nam.
+          </p>
+          <div className="flex flex-wrap justify-center gap-5">
+            <button className="group px-10 py-5 bg-white text-vietnam-gold-700 font-sans text-sm tracking-[0.15em] uppercase hover:bg-cream-50 transition-all duration-300 shadow-strong flex items-center space-x-3">
+              <span>Đăng Ký Bán Hàng</span>
+              <ArrowRight className="transition-transform duration-300 group-hover:translate-x-1" size={20} />
+            </button>
+            <button className="px-10 py-5 border-2 border-white text-white font-sans text-sm tracking-[0.15em] uppercase hover:bg-white hover:text-vietnam-gold-700 transition-all duration-300">
+              Tìm Hiểu Thêm
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <section className="relative py-24 px-4 bg-white">
+        <div className="max-w-6xl mx-auto">
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-12 scroll-animate">
+            {[
+              { value: '1000+', label: 'Sản Phẩm' },
+              { value: '50+', label: 'Đối Tác' },
+              { value: '5000+', label: 'Khách Hàng' },
+              { value: '4.8★', label: 'Đánh Giá' }
+            ].map((stat, index) => (
+              <div key={index} className="text-center fade-scroll group">
+                <div className="mb-4 transition-transform duration-300 group-hover:scale-110">
+                  <p className="text-5xl lg:text-6xl font-serif text-vietnam-gold-600 mb-2">{stat.value}</p>
+                  <div className="w-12 h-1 bg-vietnam-gold mx-auto"></div>
+                </div>
+                <p className="text-charcoal-600 text-lg font-sans tracking-wide">{stat.label}</p>
+              </div>
+            ))}
           </div>
         </div>
       </section>
