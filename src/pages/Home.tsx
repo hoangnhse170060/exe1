@@ -1,309 +1,248 @@
-import { useState, useEffect } from 'react';
-import { Menu, X, Clock, Facebook, Instagram, Twitter, ChevronLeft, ChevronRight } from 'lucide-react';
+import { useEffect } from 'react';
+import { ArrowRight, Award, Users, Globe2, TrendingUp } from 'lucide-react';
+import { useScrollAnimation } from '../hooks/useScrollAnimation';
 
-type HeaderProps = {
-  currentPage: string;
+type HomeProps = {
   onNavigate: (page: string) => void;
-  onSidebarToggle?: (isOpen: boolean) => void;
 };
 
-export default function Header({ currentPage, onNavigate, onSidebarToggle }: HeaderProps) {
-  const [isSidebarOpen, setIsSidebarOpen] = useState(true);
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false); // ✅ FIXED
+export default function Home({ onNavigate }: HomeProps) {
+  useScrollAnimation();
 
   useEffect(() => {
-    if (onSidebarToggle) onSidebarToggle(isSidebarOpen);
-  }, [isSidebarOpen, onSidebarToggle]);
-
-  const navItems = [
-    { id: 'home', label: 'TRANG CHỦ' },
-    { id: 'history', label: 'LỊCH SỬ' },
-    { id: 'shop', label: 'SHOP' },
-    { id: 'forum', label: 'DIỄN ĐÀN' },
-    { id: 'services', label: 'DỊCH VỤ' },
-    { id: 'contact', label: 'LIÊN HỆ' },
-  ];
+    window.scrollTo(0, 0);
+  }, []);
 
   return (
-    <>
-      {/* ===== Desktop Sidebar ===== */}
-      <aside
-        className={`hidden lg:flex fixed top-0 h-screen z-50 transition-all duration-500 ease-in-out overflow-hidden ${
-          isSidebarOpen ? 'left-0 w-[340px]' : 'left-[-340px] w-[340px]'
-        }`}
-        style={{ boxShadow: '4px 0 24px rgba(0,0,0,0.12)' }}
-      >
-        {/* Gold strip */}
-        <div
-          className="w-[90px] h-full flex flex-col items-center py-8 relative overflow-hidden"
-          style={{
-            background: 'linear-gradient(180deg, #B78B3B 0%, #CBA26A 50%, #B78B3B 100%)',
-          }}
-        >
-          <div
-            className="absolute inset-0 opacity-10"
-            style={{
-              backgroundImage:
-                'repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(255,255,255,0.1) 2px, rgba(255,255,255,0.1) 4px)',
-            }}
-          ></div>
-          <div className="relative w-full h-full flex flex-col items-center justify-center space-y-8">
-            <div className="w-1 h-16 bg-gradient-to-b from-transparent via-white/40 to-transparent rounded-full"></div>
-          </div>
-        </div>
-
-        {/* Main dark panel */}
-        <div
-          className="w-[250px] h-full flex flex-col relative"
-          style={{
-            background: 'linear-gradient(135deg, #1A1A1A 0%, #0D0D0D 100%)',
-          }}
-        >
-          <div
-            className="absolute inset-0 opacity-5 pointer-events-none"
-            style={{
-              backgroundImage:
-                'radial-gradient(circle at 50% 0%, #CBA26A 0%, transparent 70%)',
-            }}
-          ></div>
-
-          {/* Logo */}
-          <div
-            className="px-7 pt-12 pb-8 cursor-pointer group relative"
-            onClick={() => onNavigate('home')}
-          >
-            <div className="flex items-center space-x-4 relative z-10">
-              <div className="w-14 h-14 flex items-center justify-center transition-all duration-500 group-hover:scale-110 group-hover:rotate-12 relative">
-                <div className="absolute inset-0 bg-gradient-to-br from-[#CBA26A] to-[#B78B3B] opacity-20 rounded-full blur-lg group-hover:opacity-40 transition-opacity duration-500"></div>
-                <svg
-                  className="w-full h-full text-[#CBA26A] relative z-10 drop-shadow-lg"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="1.5"
-                  strokeLinecap="round"
-                >
-                  <circle cx="12" cy="12" r="10" />
-                  <path d="M12 6v6l4 2" />
-                </svg>
-              </div>
-              <div>
-                <h1
-                  className="text-[15px] font-serif font-light tracking-[0.25em] text-white/90 uppercase leading-tight transition-colors duration-300 group-hover:text-[#CBA26A]"
-                  style={{ fontFamily: 'Playfair Display, serif' }}
-                >
-                  ECHOES OF
-                </h1>
-                <p
-                  className="text-xs font-serif text-[#CBA26A] tracking-[0.2em] mt-0.5"
-                  style={{ fontFamily: 'Playfair Display, serif' }}
-                >
-                  VIỆT NAM
-                </p>
-              </div>
+    <div className="min-h-screen">
+      <section className="relative h-screen parallax overlay-gradient" style={{
+        backgroundImage: 'url(https://images.pexels.com/photos/1166644/pexels-photo-1166644.jpeg)',
+      }}>
+        <div className="relative z-10 h-full flex items-center justify-center px-8">
+          <div className="max-w-5xl text-center animate-fade-up">
+            <div className="inline-block px-6 py-2 border border-white/30 text-white/90 text-xs tracking-[0.2em] uppercase mb-8">
+              Được thành lập từ 1995
             </div>
-            <div className="absolute bottom-0 left-7 right-7 h-px bg-gradient-to-r from-transparent via-[#CBA26A]/30 to-transparent"></div>
-          </div>
 
-          {/* Navigation */}
-          <nav className="flex-1 px-5 py-10 flex flex-col justify-center space-y-1.5">
-            {navItems.map((item, index) => (
+            <h1 className="text-6xl md:text-7xl lg:text-8xl font-serif text-white mb-8 text-shadow-premium leading-tight">
+              Echoes of Việt Nam
+            </h1>
+
+            <div className="w-24 h-[2px] bg-bronze mx-auto mb-8"></div>
+
+            <p className="text-xl md:text-2xl text-white/95 mb-16 leading-relaxed max-w-3xl mx-auto">
+              Gần ba thập kỷ bảo tồn và lan tỏa di sản lịch sử văn hóa quý báu của dân tộc Việt Nam
+            </p>
+
+            <div className="flex flex-wrap justify-center gap-6">
               <button
-                key={item.id}
-                onClick={() => onNavigate(item.id)}
-                className={`group relative w-full text-left text-[13px] font-sans tracking-[0.08em] transition-all duration-300 py-4 px-5 rounded-xl overflow-hidden ${
-                  currentPage === item.id
-                    ? 'text-[#CBA26A] font-semibold'
-                    : 'text-white/70 hover:text-[#CBA26A] font-medium'
-                }`}
-                style={{
-                  fontFamily: 'Poppins, sans-serif',
-                  transitionDelay: `${index * 30}ms`,
-                }}
+                onClick={() => onNavigate('history')}
+                className="btn-primary group flex items-center gap-3"
               >
-                <div
-                  className={`absolute inset-0 transition-all duration-300 ${
-                    currentPage === item.id
-                      ? 'bg-gradient-to-r from-[#CBA26A]/15 to-[#CBA26A]/5'
-                      : 'bg-transparent group-hover:bg-[#CBA26A]/5'
-                  }`}
-                ></div>
-                <div
-                  className={`absolute left-0 top-1/2 -translate-y-1/2 w-1 h-0 transition-all duration-300 rounded-r-full ${
-                    currentPage === item.id
-                      ? 'h-full bg-gradient-to-b from-[#CBA26A] to-[#B78B3B]'
-                      : 'group-hover:h-3/4 bg-[#CBA26A]/50'
-                  }`}
-                ></div>
-                <div className="absolute right-4 top-1/2 -translate-y-1/2 w-1.5 h-1.5 rounded-full bg-[#CBA26A] opacity-0 group-hover:opacity-100 transition-all duration-300"></div>
-                <span className="relative z-10 block transition-transform duration-300 group-hover:translate-x-1.5">
-                  {item.label}
-                </span>
+                <span>Khám Phá Di Sản</span>
+                <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
               </button>
+              <button className="btn-secondary">
+                Về Chúng Tôi
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="py-24 px-8 bg-white">
+        <div className="max-w-7xl mx-auto">
+          <div className="grid md:grid-cols-4 gap-16">
+            {[
+              { icon: Award, value: '29+', label: 'Năm Kinh Nghiệm' },
+              { icon: Users, value: '50K+', label: 'Thành Viên' },
+              { icon: Globe2, value: '40+', label: 'Quốc Gia' },
+              { icon: TrendingUp, value: '500+', label: 'Dự Án' },
+            ].map((stat, index) => (
+              <div key={index} className="text-center animate-on-scroll group">
+                <stat.icon className="w-12 h-12 mx-auto mb-6 text-bronze group-hover:scale-110 transition-transform duration-300" strokeWidth={1.5} />
+                <div className="text-5xl font-serif text-charcoal-900 mb-3">{stat.value}</div>
+                <div className="text-sm text-charcoal-600 tracking-wider uppercase">{stat.label}</div>
+              </div>
             ))}
-          </nav>
+          </div>
+        </div>
+      </section>
 
-          {/* Footer */}
-          <div className="px-7 pb-10 space-y-7 relative z-10">
-            <div className="relative">
-              <div className="absolute -top-4 left-0 right-0 h-px bg-gradient-to-r from-transparent via-[#CBA26A]/30 to-transparent"></div>
-              <div className="flex items-start space-x-3 pt-6 group cursor-default">
-                <div className="mt-0.5">
-                  <Clock
-                    size={18}
-                    className="text-[#CBA26A] group-hover:rotate-180 transition-transform duration-700"
-                  />
-                </div>
-                <div className="flex-1">
-                  <span className="text-[11px] font-sans tracking-[0.1em] text-white/60 uppercase block mb-2.5">
-                    Giờ làm việc
-                  </span>
-                  <p className="text-xs text-white/80 leading-relaxed font-light">
-                    <span className="text-[#CBA26A] font-medium">T2 - T6:</span>{' '}
-                    9:00 - 18:00
-                    <br />
-                    <span className="text-[#CBA26A] font-medium">T7 - CN:</span>{' '}
-                    10:00 - 16:00
-                  </p>
-                </div>
+      <section className="py-32 px-8 bg-sand-100">
+        <div className="max-w-6xl mx-auto">
+          <div className="text-center mb-20 animate-on-scroll">
+            <div className="inline-block px-6 py-2 border border-bronze text-bronze text-xs tracking-[0.2em] uppercase mb-6">
+              Chuyên Môn
+            </div>
+            <h2 className="section-heading mb-6">
+              Di Sản Được Bảo Tồn
+            </h2>
+            <div className="w-20 h-[2px] bg-bronze mx-auto mb-8"></div>
+            <p className="section-subheading max-w-3xl mx-auto">
+              Với gần ba thập kỷ kinh nghiệm, chúng tôi tự hào là đơn vị tiên phong trong việc
+              bảo tồn và phát triển di sản lịch sử văn hóa Việt Nam
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-2 gap-16 items-center">
+            <div className="animate-on-scroll">
+              <div className="relative group">
+                <div className="absolute -inset-4 bg-bronze/10 group-hover:bg-bronze/20 transition-colors duration-500"></div>
+                <img
+                  src="https://images.pexels.com/photos/1670723/pexels-photo-1670723.jpeg"
+                  alt="Di sản văn hóa"
+                  className="relative w-full h-[600px] object-cover"
+                />
               </div>
             </div>
 
-            {/* Social */}
-            <div>
-              <p className="text-[11px] font-sans tracking-[0.1em] text-white/60 uppercase mb-4">
-                Kết nối với chúng tôi
-              </p>
-              <div className="flex space-x-3">
-                {[Facebook, Instagram, Twitter].map((Icon, i) => (
-                  <a
-                    key={i}
-                    href="#"
-                    className="relative w-10 h-10 rounded-xl flex items-center justify-center text-[#CBA26A] transition-all duration-300 hover:scale-110 hover:-translate-y-1 group overflow-hidden"
-                    style={{
-                      background:
-                        'linear-gradient(135deg, rgba(203,162,106,0.1) 0%, rgba(183,139,59,0.1) 100%)',
-                    }}
-                  >
-                    <div className="absolute inset-0 bg-gradient-to-br from-[#CBA26A] to-[#B78B3B] opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                    <Icon
-                      size={16}
-                      className="relative z-10 group-hover:text-white transition-colors duration-300"
-                    />
-                  </a>
-                ))}
-              </div>
-            </div>
-          </div>
-        </div>
-      </aside>
-
-      {/* Sidebar toggle button */}
-      <button
-        onClick={() => setIsSidebarOpen(!isSidebarOpen)}
-        className={`hidden lg:flex fixed top-1/2 -translate-y-1/2 z-50 w-12 h-20 items-center justify-center transition-all duration-500 group relative overflow-hidden ${
-          isSidebarOpen ? 'left-[340px]' : 'left-0'
-        }`}
-        style={{
-          borderRadius: '0 12px 12px 0',
-          background: 'linear-gradient(135deg, #B78B3B 0%, #CBA26A 100%)',
-          boxShadow: '2px 0 16px rgba(183,139,59,0.3)',
-        }}
-      >
-        <div className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/20 to-white/0 -translate-x-full group-hover:translate-x-full transition-transform duration-700"></div>
-        {isSidebarOpen ? (
-          <ChevronLeft
-            size={22}
-            className="text-white relative z-10 transition-transform duration-300 group-hover:scale-110"
-            strokeWidth={2.5}
-          />
-        ) : (
-          <ChevronRight
-            size={22}
-            className="text-white relative z-10 transition-transform duration-300 group-hover:scale-110"
-            strokeWidth={2.5}
-          />
-        )}
-      </button>
-
-      {/* ===== Mobile Header ===== */}
-      <header className="lg:hidden fixed top-0 left-0 right-0 z-50 bg-[#FAF9F7] h-[70px] border-b border-[#CBA26A]/10 shadow-md">
-        <div
-          className="absolute inset-0 pointer-events-none opacity-[0.08] mix-blend-multiply"
-          style={{
-            backgroundImage: 'url(/image copy copy.png)',
-            backgroundRepeat: 'no-repeat',
-            backgroundPosition: 'center',
-            backgroundSize: 'auto 80%',
-          }}
-        ></div>
-
-        <div className="px-4 sm:px-6 relative z-10 h-full flex items-center justify-between">
-          {/* Logo */}
-          <div
-            className="flex items-center cursor-pointer group"
-            onClick={() => onNavigate('home')}
-          >
-            <div className="w-10 h-10 mr-3 flex items-center justify-center transition-transform duration-300 group-hover:scale-110">
-              <svg
-                className="w-full h-full text-[#CBA26A]"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="1.5"
-              >
-                <circle cx="12" cy="12" r="10" />
-                <path d="M12 6v6l4 2" />
-              </svg>
-            </div>
-            <div>
-              <h1 className="text-base font-serif font-light tracking-[0.2em] text-[#2B2B2B] uppercase">
-                ECHOES OF
-              </h1>
-              <p className="text-xs font-serif text-[#CBA26A] tracking-[0.15em]">
-                VIỆT NAM
-              </p>
-            </div>
-          </div>
-
-          {/* Mobile Menu Button */}
-          <button
-            className="text-[#2B2B2B] hover:text-[#CBA26A] transition-all duration-300 hover:scale-110"
-            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-          >
-            {isMobileMenuOpen ? (
-              <X size={24} strokeWidth={1.5} />
-            ) : (
-              <Menu size={24} strokeWidth={1.5} />
-            )}
-          </button>
-        </div>
-
-        {/* Mobile Menu */}
-        {isMobileMenuOpen && (
-          <div className="bg-[#FAF9F7] backdrop-blur-lg border-t border-[#CBA26A]/20 animate-slide-in">
-            <nav className="px-6 py-8 space-y-3">
-              {navItems.map((item) => (
-                <button
-                  key={item.id}
-                  onClick={() => {
-                    onNavigate(item.id);
-                    setIsMobileMenuOpen(false);
-                  }}
-                  className={`block w-full text-left text-base font-sans tracking-wide py-3 transition-all duration-300 rounded-lg px-4 ${
-                    currentPage === item.id
-                      ? 'text-[#CBA26A] bg-[#CBA26A]/10 font-semibold border-l-4 border-[#CBA26A]'
-                      : 'text-[#2B2B2B] hover:text-[#CBA26A] hover:bg-[#CBA26A]/5 hover:translate-x-1'
-                  }`}
-                  style={{ fontFamily: 'Poppins, sans-serif' }}
-                >
-                  {item.label}
-                </button>
+            <div className="space-y-12 animate-on-scroll">
+              {[
+                {
+                  title: 'Nghiên Cứu Chuyên Sâu',
+                  desc: 'Đội ngũ chuyên gia hàng đầu với hơn 25 năm kinh nghiệm nghiên cứu lịch sử và văn hóa',
+                },
+                {
+                  title: 'Bảo Tồn Chuyên Nghiệp',
+                  desc: 'Áp dụng công nghệ hiện đại kết hợp phương pháp truyền thống để bảo tồn di sản',
+                },
+                {
+                  title: 'Giáo Dục Cộng Đồng',
+                  desc: 'Hơn 500 chương trình giáo dục và hội thảo đã được tổ chức trên toàn quốc',
+                },
+              ].map((item, index) => (
+                <div key={index} className="group">
+                  <div className="flex items-start gap-6">
+                    <div className="w-12 h-12 bg-bronze flex items-center justify-center text-white font-serif text-xl flex-shrink-0 group-hover:scale-110 transition-transform">
+                      {index + 1}
+                    </div>
+                    <div>
+                      <h3 className="text-2xl font-serif text-charcoal-900 mb-3">{item.title}</h3>
+                      <p className="text-charcoal-600 leading-relaxed">{item.desc}</p>
+                    </div>
+                  </div>
+                </div>
               ))}
-            </nav>
+            </div>
           </div>
-        )}
-      </header>
-    </>
+        </div>
+      </section>
+
+      <section className="py-32 px-8 bg-white">
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center mb-20 animate-on-scroll">
+            <div className="inline-block px-6 py-2 border border-bronze text-bronze text-xs tracking-[0.2em] uppercase mb-6">
+              Dịch Vụ
+            </div>
+            <h2 className="section-heading mb-6">
+              Những Gì Chúng Tôi Cung Cấp
+            </h2>
+            <div className="w-20 h-[2px] bg-bronze mx-auto"></div>
+          </div>
+
+          <div className="grid md:grid-cols-3 gap-8">
+            {[
+              {
+                title: 'Nghiên Cứu Lịch Sử',
+                image: 'https://images.pexels.com/photos/1595385/pexels-photo-1595385.jpeg',
+                desc: 'Dịch vụ nghiên cứu chuyên sâu về lịch sử, văn hóa với đội ngũ chuyên gia giàu kinh nghiệm',
+              },
+              {
+                title: 'Tư Vấn Bảo Tồn',
+                image: 'https://images.pexels.com/photos/2251247/pexels-photo-2251247.jpeg',
+                desc: 'Tư vấn và thực hiện các dự án bảo tồn di sản văn hóa theo tiêu chuẩn quốc tế',
+              },
+              {
+                title: 'Giáo Dục & Đào Tạo',
+                image: 'https://images.pexels.com/photos/1370296/pexels-photo-1370296.jpeg',
+                desc: 'Chương trình đào tạo chuyên nghiệp về lịch sử, văn hóa và bảo tồn di sản',
+              },
+            ].map((service, index) => (
+              <div
+                key={index}
+                className="card-premium group overflow-hidden cursor-pointer animate-on-scroll"
+                onClick={() => onNavigate('services')}
+              >
+                <div className="relative h-80 overflow-hidden">
+                  <img
+                    src={service.image}
+                    alt={service.title}
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-charcoal-900/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                </div>
+                <div className="p-8">
+                  <h3 className="text-2xl font-serif text-charcoal-900 mb-4 group-hover:text-bronze transition-colors">
+                    {service.title}
+                  </h3>
+                  <p className="text-charcoal-600 leading-relaxed mb-6">{service.desc}</p>
+                  <button className="flex items-center gap-2 text-bronze text-sm tracking-wider uppercase font-medium group-hover:gap-4 transition-all">
+                    <span>Tìm Hiểu Thêm</span>
+                    <ArrowRight size={16} />
+                  </button>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="py-32 px-8 bg-gradient-bronze text-white">
+        <div className="max-w-4xl mx-auto text-center animate-on-scroll">
+          <h2 className="text-5xl md:text-6xl font-serif mb-8 leading-tight">
+            Cùng Nhau Bảo Tồn Di Sản
+          </h2>
+          <p className="text-xl mb-12 leading-relaxed text-white/90">
+            Tham gia cùng chúng tôi trong hành trình bảo tồn và phát triển di sản văn hóa quý báu
+            của dân tộc Việt Nam
+          </p>
+          <div className="flex flex-wrap justify-center gap-6">
+            <button
+              onClick={() => onNavigate('contact')}
+              className="px-12 py-5 bg-white text-bronze text-sm tracking-[0.1em] uppercase font-medium hover:bg-sand-50 transition-all duration-400"
+            >
+              Liên Hệ Ngay
+            </button>
+            <button className="px-12 py-5 border-2 border-white text-white text-sm tracking-[0.1em] uppercase font-medium hover:bg-white hover:text-bronze transition-all duration-400">
+              Xem Dự Án
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <section className="py-24 px-8 bg-white">
+        <div className="max-w-6xl mx-auto">
+          <div className="grid md:grid-cols-3 gap-12">
+            {[
+              {
+                quote: 'Đội ngũ chuyên môn cao, tận tâm và có tầm nhìn xa. Dự án bảo tồn di tích của chúng tôi đã thành công rực rỡ nhờ sự hỗ trợ của Echoes of Việt Nam.',
+                author: 'Nguyễn Văn A',
+                title: 'Giám Đốc Bảo Tàng',
+              },
+              {
+                quote: 'Gần 30 năm kinh nghiệm thực sự tạo nên sự khác biệt. Echoes of Việt Nam là đối tác đáng tin cậy nhất trong lĩnh vực bảo tồn di sản.',
+                author: 'Trần Thị B',
+                title: 'Chuyên Gia Văn Hóa',
+              },
+              {
+                quote: 'Phương pháp tiếp cận chuyên nghiệp, hiện đại nhưng vẫn giữ được giá trị truyền thống. Một đơn vị xuất sắc trong ngành.',
+                author: 'Lê Văn C',
+                title: 'Nhà Nghiên Cứu',
+              },
+            ].map((testimonial, index) => (
+              <div key={index} className="animate-on-scroll">
+                <div className="text-5xl text-bronze/20 font-serif mb-4">"</div>
+                <p className="text-charcoal-700 leading-relaxed mb-6 italic">{testimonial.quote}</p>
+                <div>
+                  <div className="font-medium text-charcoal-900">{testimonial.author}</div>
+                  <div className="text-sm text-charcoal-500">{testimonial.title}</div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+    </div>
   );
 }
