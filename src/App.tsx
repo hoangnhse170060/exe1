@@ -34,7 +34,7 @@ function App() {
   return (
     <div className="min-h-screen">
       <Header currentPage={currentPage} onNavigate={setCurrentPage} onSidebarToggle={setIsSidebarOpen} />
-      <main className={`relative transition-all duration-300 ${isSidebarOpen ? 'lg:ml-[320px]' : 'lg:ml-0'}`}>{renderPage()}</main>
+      <main className={`relative transition-all duration-500 ${isSidebarOpen ? 'lg:ml-[340px]' : 'lg:ml-0'}`}>{renderPage()}</main>
       <Footer isSidebarOpen={isSidebarOpen} />
     </div>
   );
