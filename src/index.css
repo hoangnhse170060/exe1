@@ -91,10 +91,10 @@
   }
 
   .sidebar-elegant {
-    background: linear-gradient(135deg, rgba(10, 10, 10, 0.98) 0%, rgba(20, 18, 15, 0.98) 50%, rgba(25, 22, 18, 0.98) 100%);
+    background: linear-gradient(135deg, rgba(253, 251, 247, 0.98) 0%, rgba(250, 246, 240, 0.98) 50%, rgba(245, 241, 232, 0.98) 100%);
     backdrop-filter: blur(12px);
-    box-shadow: 4px 0 30px rgba(0, 0, 0, 0.5);
-    border-right: 1px solid rgba(168, 123, 76, 0.15);
+    box-shadow: 4px 0 30px rgba(0, 0, 0, 0.1);
+    border-right: 1px solid rgba(196, 166, 118, 0.2);
   }
 
   .menu-item-elegant {
@@ -109,7 +109,7 @@
     left: 0;
     width: 0;
     height: 2px;
-    background-color: #c29b63;
+    background-color: #c4a676;
     transition: width 0.35s ease;
   }
 
@@ -124,6 +124,6 @@
     left: 0;
     width: 100%;
     height: 2px;
-    background-color: #c29b63;
+    background-color: #c4a676;
   }
 }

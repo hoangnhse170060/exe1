@@ -55,7 +55,7 @@ export default function Sidebar({ currentPage, onNavigate }: SidebarProps) {
             <div className="mb-12">
               <button
                 onClick={() => setIsOpen(false)}
-                className="absolute top-8 left-8 w-10 h-10 flex items-center justify-center text-[#f2ede1]/80 hover:text-white transition-all duration-300 hover:scale-110 z-10"
+                className="absolute top-8 left-8 w-10 h-10 flex items-center justify-center text-charcoal-600 hover:text-charcoal-900 transition-all duration-300 hover:scale-110 z-10"
                 aria-label="Close Menu"
               >
                 <X size={22} />
@@ -68,7 +68,7 @@ export default function Sidebar({ currentPage, onNavigate }: SidebarProps) {
                 <div className="w-10 h-10 mb-4 flex items-center justify-center">
                   <Clock className="text-[#c4a676]" size={32} />
                 </div>
-                <h1 className="text-xl font-display text-[#f2ede1] tracking-wider leading-snug uppercase">
+                <h1 className="text-xl font-display text-charcoal-900 tracking-wider leading-snug uppercase">
                   ECHOES OF<br />VIỆT NAM
                 </h1>
               </div>
@@ -81,8 +81,8 @@ export default function Sidebar({ currentPage, onNavigate }: SidebarProps) {
                     onClick={() => handleNavigation(item.id)}
                     className={`group relative text-left py-1.5 font-serif text-base tracking-wide uppercase transition-all duration-300 ${
                       currentPage === item.id
-                        ? 'text-[#f2ede1] menu-item-active-elegant'
-                        : 'text-[#f2ede1]/90 hover:text-[#c29b63] menu-item-elegant'
+                        ? 'text-charcoal-900 menu-item-active-elegant'
+                        : 'text-charcoal-800 hover:text-[#c4a676] menu-item-elegant'
                     }`}
                   >
                     {item.label}
@@ -92,7 +92,7 @@ export default function Sidebar({ currentPage, onNavigate }: SidebarProps) {
                       {item.subItems.map((subItem) => (
                         <button
                           key={subItem}
-                          className="block text-left text-[#d0c6b1]/80 text-sm py-0.5 hover:text-[#c29b63] transition-colors duration-300"
+                          className="block text-left text-charcoal-600 text-sm py-0.5 hover:text-[#c4a676] transition-colors duration-300"
                         >
                           - {subItem}
                         </button>
@@ -104,12 +104,12 @@ export default function Sidebar({ currentPage, onNavigate }: SidebarProps) {
             </nav>
 
             <div className="space-y-6">
-              <div className="text-[#d0c6b1] text-xs space-y-2">
+              <div className="text-charcoal-600 text-xs space-y-2">
                 <div>
-                  <p className="mb-0.5">Mon–Thu: <span className="text-[#f2ede1]">8:00–17:00</span></p>
+                  <p className="mb-0.5">Mon–Thu: <span className="text-charcoal-900 font-medium">8:00–17:00</span></p>
                 </div>
                 <div>
-                  <p className="mb-0.5">Fri–Sun: <span className="text-[#f2ede1]">8:00–18:00</span></p>
+                  <p className="mb-0.5">Fri–Sun: <span className="text-charcoal-900 font-medium">8:00–18:00</span></p>
                 </div>
               </div>
 
@@ -119,7 +119,7 @@ export default function Sidebar({ currentPage, onNavigate }: SidebarProps) {
                     key={social.label}
                     href={social.url}
                     aria-label={social.label}
-                    className="text-[#c2b38c]/70 hover:text-[#c29b63] transition-all duration-300"
+                    className="text-charcoal-500 hover:text-[#c4a676] transition-all duration-300"
                   >
                     <social.icon size={18} />
                   </a>
@@ -128,10 +128,10 @@ export default function Sidebar({ currentPage, onNavigate }: SidebarProps) {
             </div>
           </div>
 
-          <div className="absolute top-0 right-0 w-px h-full bg-gradient-to-b from-transparent via-[#c4a676]/40 to-transparent"></div>
+          <div className="absolute top-0 right-0 w-px h-full bg-gradient-to-b from-transparent via-[#c4a676]/30 to-transparent"></div>
 
-          <div className="absolute inset-0 pointer-events-none opacity-[0.02]" style={{
-            backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
+          <div className="absolute inset-0 pointer-events-none opacity-[0.03]" style={{
+            backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23000000' fill-opacity='1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
           }}></div>
         </div>
       </aside>
