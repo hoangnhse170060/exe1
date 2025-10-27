@@ -29,130 +29,94 @@ export default function Header({ currentPage, onNavigate, onSidebarToggle }: Hea
   return (
     <>
       <aside className={`hidden lg:flex fixed top-0 h-screen z-50 transition-all duration-500 ease-in-out overflow-hidden ${
-        isSidebarOpen ? 'left-0 w-[340px]' : 'left-[-340px] w-[340px]'
-      }`} style={{ boxShadow: '4px 0 24px rgba(0,0,0,0.12)' }}>
-        <div className="w-[90px] h-full flex flex-col items-center py-8 relative overflow-hidden" style={{
-          background: 'linear-gradient(180deg, #B78B3B 0%, #CBA26A 50%, #B78B3B 100%)'
+        isSidebarOpen ? 'left-0 w-[240px]' : 'left-[-240px] w-[240px]'
+      }`}>
+        <div className="w-[60px] h-full relative" style={{
+          background: '#B78B3B'
         }}>
-          <div className="absolute inset-0 opacity-10" style={{
-            backgroundImage: 'repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(255,255,255,0.1) 2px, rgba(255,255,255,0.1) 4px)'
-          }}></div>
-          <div className="relative w-full h-full flex flex-col items-center justify-center space-y-8">
-            <div className="w-1 h-16 bg-gradient-to-b from-transparent via-white/40 to-transparent rounded-full"></div>
-          </div>
         </div>
 
-        <div className="w-[250px] h-full flex flex-col relative" style={{
-          background: 'linear-gradient(135deg, #1A1A1A 0%, #0D0D0D 100%)'
-        }}>
-          <div className="absolute inset-0 opacity-5 pointer-events-none" style={{
-            backgroundImage: 'radial-gradient(circle at 50% 0%, #CBA26A 0%, transparent 70%)'
-          }}></div>
+        <div className="w-[180px] h-full flex flex-col relative bg-black">
 
           <div
-            className="px-7 pt-12 pb-8 cursor-pointer group relative"
+            className="px-4 pt-8 pb-6 cursor-pointer group relative"
             onClick={() => onNavigate('home')}
           >
-            <div className="flex items-center space-x-4 relative z-10">
-              <div className="w-14 h-14 flex items-center justify-center transition-all duration-500 group-hover:scale-110 group-hover:rotate-12 relative">
-                <div className="absolute inset-0 bg-gradient-to-br from-[#CBA26A] to-[#B78B3B] opacity-20 rounded-full blur-lg group-hover:opacity-40 transition-opacity duration-500"></div>
-                <svg className="w-full h-full text-[#CBA26A] relative z-10 drop-shadow-lg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round">
+            <div className="flex flex-col items-center relative z-10">
+              <div className="w-12 h-12 mb-3 flex items-center justify-center transition-all duration-300 group-hover:scale-110">
+                <svg className="w-full h-full text-[#CBA26A]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
                   <circle cx="12" cy="12" r="10" />
                   <path d="M12 6v6l4 2" />
                 </svg>
               </div>
-              <div>
-                <h1 className="text-[15px] font-serif font-light tracking-[0.25em] text-white/90 uppercase leading-tight transition-colors duration-300 group-hover:text-[#CBA26A]" style={{ fontFamily: 'Playfair Display, serif' }}>
+              <div className="text-center">
+                <h1 className="text-xs font-serif tracking-[0.15em] text-white/70 uppercase leading-tight" style={{ fontFamily: 'Playfair Display, serif' }}>
                   ECHOES OF
                 </h1>
-                <p className="text-xs font-serif text-[#CBA26A] tracking-[0.2em] mt-0.5" style={{ fontFamily: 'Playfair Display, serif' }}>
+                <p className="text-xs font-serif text-[#CBA26A] tracking-[0.15em]" style={{ fontFamily: 'Playfair Display, serif' }}>
                   VIỆT NAM
                 </p>
               </div>
             </div>
-            <div className="absolute bottom-0 left-7 right-7 h-px bg-gradient-to-r from-transparent via-[#CBA26A]/30 to-transparent"></div>
           </div>
 
-          <nav className="flex-1 px-5 py-10 flex flex-col justify-center space-y-1.5">
-            {navItems.map((item, index) => (
+          <nav className="flex-1 px-3 py-8 flex flex-col justify-center space-y-0.5">
+            {navItems.map((item) => (
               <button
                 key={item.id}
                 onClick={() => onNavigate(item.id)}
-                className={`group relative w-full text-left text-[13px] font-sans tracking-[0.08em] transition-all duration-300 py-4 px-5 rounded-xl overflow-hidden ${
+                className={`group relative w-full text-center text-[11px] font-sans tracking-[0.05em] transition-all duration-200 py-3.5 ${
                   currentPage === item.id
-                    ? 'text-[#CBA26A] font-semibold'
-                    : 'text-white/70 hover:text-[#CBA26A] font-medium'
+                    ? 'text-[#CBA26A]'
+                    : 'text-[#5A5A5A] hover:text-white/80'
                 }`}
                 style={{
-                  fontFamily: 'Poppins, sans-serif',
-                  transitionDelay: `${index * 30}ms`
+                  fontFamily: 'Poppins, sans-serif'
                 }}
               >
-                <div className={`absolute inset-0 transition-all duration-300 ${
-                  currentPage === item.id
-                    ? 'bg-gradient-to-r from-[#CBA26A]/15 to-[#CBA26A]/5'
-                    : 'bg-transparent group-hover:bg-[#CBA26A]/5'
-                }`}></div>
-                <div className={`absolute left-0 top-1/2 -translate-y-1/2 w-1 h-0 transition-all duration-300 rounded-r-full ${
-                  currentPage === item.id
-                    ? 'h-full bg-gradient-to-b from-[#CBA26A] to-[#B78B3B]'
-                    : 'group-hover:h-3/4 bg-[#CBA26A]/50'
-                }`}></div>
-                <div className="absolute right-4 top-1/2 -translate-y-1/2 w-1.5 h-1.5 rounded-full bg-[#CBA26A] opacity-0 group-hover:opacity-100 transition-all duration-300"></div>
-                <span className="relative z-10 block transition-transform duration-300 group-hover:translate-x-1.5">
+                <span className="relative z-10 block">
                   {item.label}
                 </span>
               </button>
             ))}
           </nav>
 
-          <div className="px-7 pb-10 space-y-7 relative z-10">
+          <div className="px-3 pb-8 space-y-5 relative z-10">
             <div className="relative">
-              <div className="absolute -top-4 left-0 right-0 h-px bg-gradient-to-r from-transparent via-[#CBA26A]/30 to-transparent"></div>
-              <div className="flex items-start space-x-3 pt-6 group cursor-default">
-                <div className="mt-0.5">
-                  <Clock size={18} className="text-[#CBA26A] group-hover:rotate-180 transition-transform duration-700" />
-                </div>
-                <div className="flex-1">
-                  <span className="text-[11px] font-sans tracking-[0.1em] text-white/60 uppercase block mb-2.5" style={{ fontFamily: 'Poppins, sans-serif' }}>
-                    Giờ làm việc
-                  </span>
-                  <p className="text-xs text-white/80 leading-relaxed font-light" style={{ fontFamily: 'Poppins, sans-serif', lineHeight: '1.7' }}>
-                    <span className="text-[#CBA26A] font-medium">T2 - T6:</span> 9:00 - 18:00<br />
-                    <span className="text-[#CBA26A] font-medium">T7 - CN:</span> 10:00 - 16:00
-                  </p>
-                </div>
+              <div className="flex flex-col items-center group cursor-default">
+                <Clock size={16} className="text-[#CBA26A] mb-2" />
+                <span className="text-[9px] font-sans tracking-[0.08em] text-[#5A5A5A] uppercase block mb-2" style={{ fontFamily: 'Poppins, sans-serif' }}>
+                  GIỜ LÀM VIỆC
+                </span>
+                <p className="text-[10px] text-white/60 leading-relaxed text-center" style={{ fontFamily: 'Poppins, sans-serif', lineHeight: '1.6' }}>
+                  T2 - T6: 9:00 - 18:00<br />
+                  T7 - CN: 10:00 - 16:00
+                </p>
               </div>
             </div>
 
             <div>
-              <p className="text-[11px] font-sans tracking-[0.1em] text-white/60 uppercase mb-4" style={{ fontFamily: 'Poppins, sans-serif' }}>
-                Kết nối với chúng tôi
+              <p className="text-[9px] font-sans tracking-[0.08em] text-[#5A5A5A] uppercase mb-3 text-center" style={{ fontFamily: 'Poppins, sans-serif' }}>
+                KẾT NỐI VỚI CHÚNG TÔI
               </p>
-              <div className="flex space-x-3">
+              <div className="flex justify-center space-x-2">
                 <a
                   href="#"
-                  className="relative w-10 h-10 rounded-xl flex items-center justify-center text-[#CBA26A] transition-all duration-300 hover:scale-110 hover:-translate-y-1 group overflow-hidden"
-                  style={{ background: 'linear-gradient(135deg, rgba(203, 162, 106, 0.1) 0%, rgba(183, 139, 59, 0.1) 100%)' }}
+                  className="w-8 h-8 rounded-full bg-[#2A2A2A] flex items-center justify-center text-white/60 hover:text-[#CBA26A] transition-colors duration-300"
                 >
-                  <div className="absolute inset-0 bg-gradient-to-br from-[#CBA26A] to-[#B78B3B] opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                  <Facebook size={16} className="relative z-10 group-hover:text-white transition-colors duration-300" />
+                  <Facebook size={14} />
                 </a>
                 <a
                   href="#"
-                  className="relative w-10 h-10 rounded-xl flex items-center justify-center text-[#CBA26A] transition-all duration-300 hover:scale-110 hover:-translate-y-1 group overflow-hidden"
-                  style={{ background: 'linear-gradient(135deg, rgba(203, 162, 106, 0.1) 0%, rgba(183, 139, 59, 0.1) 100%)' }}
+                  className="w-8 h-8 rounded-full bg-[#2A2A2A] flex items-center justify-center text-white/60 hover:text-[#CBA26A] transition-colors duration-300"
                 >
-                  <div className="absolute inset-0 bg-gradient-to-br from-[#CBA26A] to-[#B78B3B] opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                  <Instagram size={16} className="relative z-10 group-hover:text-white transition-colors duration-300" />
+                  <Instagram size={14} />
                 </a>
                 <a
                   href="#"
-                  className="relative w-10 h-10 rounded-xl flex items-center justify-center text-[#CBA26A] transition-all duration-300 hover:scale-110 hover:-translate-y-1 group overflow-hidden"
-                  style={{ background: 'linear-gradient(135deg, rgba(203, 162, 106, 0.1) 0%, rgba(183, 139, 59, 0.1) 100%)' }}
+                  className="w-8 h-8 rounded-full bg-[#2A2A2A] flex items-center justify-center text-white/60 hover:text-[#CBA26A] transition-colors duration-300"
                 >
-                  <div className="absolute inset-0 bg-gradient-to-br from-[#CBA26A] to-[#B78B3B] opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                  <Twitter size={16} className="relative z-10 group-hover:text-white transition-colors duration-300" />
+                  <Twitter size={14} />
                 </a>
               </div>
             </div>
@@ -162,20 +126,17 @@ export default function Header({ currentPage, onNavigate, onSidebarToggle }: Hea
 
       <button
         onClick={() => setIsSidebarOpen(!isSidebarOpen)}
-        className={`hidden lg:flex fixed top-1/2 -translate-y-1/2 z-50 w-12 h-20 items-center justify-center transition-all duration-500 group relative overflow-hidden ${
-          isSidebarOpen ? 'left-[340px]' : 'left-0'
+        className={`hidden lg:flex fixed top-1/2 -translate-y-1/2 z-50 w-10 h-16 items-center justify-center transition-all duration-500 bg-[#B78B3B] hover:bg-[#CBA26A] ${
+          isSidebarOpen ? 'left-[240px]' : 'left-0'
         }`}
         style={{
-          borderRadius: '0 12px 12px 0',
-          background: 'linear-gradient(135deg, #B78B3B 0%, #CBA26A 100%)',
-          boxShadow: '2px 0 16px rgba(183, 139, 59, 0.3)'
+          borderRadius: '0 8px 8px 0'
         }}
       >
-        <div className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/20 to-white/0 -translate-x-full group-hover:translate-x-full transition-transform duration-700"></div>
         {isSidebarOpen ? (
-          <ChevronLeft size={22} className="text-white relative z-10 transition-transform duration-300 group-hover:scale-110" strokeWidth={2.5} />
+          <ChevronLeft size={20} className="text-white" />
         ) : (
-          <ChevronRight size={22} className="text-white relative z-10 transition-transform duration-300 group-hover:scale-110" strokeWidth={2.5} />
+          <ChevronRight size={20} className="text-white" />
         )}
       </button>
 

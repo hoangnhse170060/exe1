@@ -12,7 +12,7 @@ export default function Footer({ isSidebarOpen = true }: FooterProps) {
   ];
 
   return (
-    <footer className={`bg-vietnam-black border-t border-vietnam-red/20 py-8 transition-all duration-500 ${isSidebarOpen ? 'lg:ml-[340px]' : 'lg:ml-0'}`}>
+    <footer className={`bg-vietnam-black border-t border-vietnam-red/20 py-8 transition-all duration-500 ${isSidebarOpen ? 'lg:ml-[240px]' : 'lg:ml-0'}`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex flex-col items-center space-y-6">
           <div className="flex space-x-6">
