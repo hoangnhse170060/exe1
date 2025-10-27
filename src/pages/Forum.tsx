@@ -1,13 +1,14 @@
 import { useState, useEffect } from 'react';
 import { MessageSquare, ThumbsUp, User, Plus, Send, LogIn, LogOut } from 'lucide-react';
 import { supabase, type ForumPost, type ForumComment } from '../lib/supabase';
+import type { User as SupabaseUser } from '@supabase/supabase-js';
 
 export default function Forum() {
   const [posts, setPosts] = useState<ForumPost[]>([]);
   const [selectedPost, setSelectedPost] = useState<ForumPost | null>(null);
   const [comments, setComments] = useState<ForumComment[]>([]);
   const [loading, setLoading] = useState(true);
-  const [user, setUser] = useState<any>(null);
+  const [user, setUser] = useState<SupabaseUser | null>(null);
   const [showAuthModal, setShowAuthModal] = useState(false);
   const [authMode, setAuthMode] = useState<'login' | 'signup'>('login');
   const [showNewPostModal, setShowNewPostModal] = useState(false);
@@ -114,8 +115,10 @@ export default function Forum() {
       setShowAuthModal(false);
       setAuthForm({ email: '', password: '', displayName: '' });
       checkUser();
-    } catch (error: any) {
-      alert(error.message);
+    } catch (error) {
+      if (error instanceof Error) {
+        alert(error.message);
+      }
     }
   };
 
@@ -141,8 +144,10 @@ export default function Forum() {
       setShowNewPostModal(false);
       setNewPost({ title: '', content: '', category: 'Trao đổi lịch sử' });
       fetchPosts();
-    } catch (error: any) {
-      alert(error.message);
+    } catch (error) {
+      if (error instanceof Error) {
+        alert(error.message);
+      }
     }
   };
 
@@ -161,8 +166,10 @@ export default function Forum() {
 
       setNewComment('');
       fetchComments(selectedPost.id);
-    } catch (error: any) {
-      alert(error.message);
+    } catch (error) {
+      if (error instanceof Error) {
+        alert(error.message);
+      }
     }
   };
 

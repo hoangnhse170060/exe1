@@ -1,4 +1,3 @@
-import { useEffect, useState } from 'react';
 import { ChevronDown, Globe, Heart, BookOpen, ArrowRight, Star } from 'lucide-react';
 import { useScrollAnimation } from '../hooks/useScrollAnimation';
 
@@ -8,16 +7,6 @@ type HomeProps = {
 
 export default function Home({ onNavigate }: HomeProps) {
   useScrollAnimation();
-  const [isScrolled, setIsScrolled] = useState(false);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 50);
-    };
-
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
 
   return (
     <div className="relative min-h-screen bg-cream-200">
