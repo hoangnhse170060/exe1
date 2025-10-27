@@ -1,10 +1,6 @@
 import { Facebook, Youtube, Instagram } from 'lucide-react';
 
-type FooterProps = {
-  isSidebarOpen?: boolean;
-};
-
-export default function Footer({ isSidebarOpen = true }: FooterProps) {
+export default function Footer() {
   const socialLinks = [
     { icon: Facebook, label: 'Facebook', url: '#' },
     { icon: Youtube, label: 'YouTube', url: '#' },
@@ -12,7 +8,7 @@ export default function Footer({ isSidebarOpen = true }: FooterProps) {
   ];
 
   return (
-    <footer className={`bg-vietnam-black border-t border-vietnam-red/20 py-8 transition-all duration-500 ${isSidebarOpen ? 'lg:ml-[340px]' : 'lg:ml-0'}`}>
+    <footer className="bg-vietnam-black border-t border-vietnam-red/20 py-8">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex flex-col items-center space-y-6">
           <div className="flex space-x-6">

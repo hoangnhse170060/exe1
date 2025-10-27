@@ -20,7 +20,7 @@ export default function Home({ onNavigate }: HomeProps) {
   }, []);
 
   return (
-    <div className="relative min-h-screen bg-cream-200 lg:pt-0 pt-[70px]">
+    <div className="relative min-h-screen bg-cream-200">
       <section className="relative h-screen bg-cover bg-center bg-no-repeat gradient-overlay" style={{
         backgroundImage: 'url(https://images.pexels.com/photos/672532/pexels-photo-672532.jpeg)',
       }}>

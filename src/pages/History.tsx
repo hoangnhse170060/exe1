@@ -61,7 +61,7 @@ export default function History() {
   const currentPeriod = activePeriod === 'french' ? frenchPeriod : americanPeriod;
 
   return (
-    <div className="min-h-screen bg-vietnam-black pt-20">
+    <div className="min-h-screen bg-vietnam-black pt-0">
       <div className="relative h-96 bg-cover bg-center" style={{
         backgroundImage: 'linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.8)), url(https://images.pexels.com/photos/672532/pexels-photo-672532.jpeg)',
       }}>

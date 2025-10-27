@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import Header from './components/Header';
+import Sidebar from './components/Sidebar';
 import Footer from './components/Footer';
 import Home from './pages/Home';
 import History from './pages/History';
@@ -10,7 +10,6 @@ import Contact from './pages/Contact';
 
 function App() {
   const [currentPage, setCurrentPage] = useState('home');
-  const [isSidebarOpen, setIsSidebarOpen] = useState(true);
 
   const renderPage = () => {
     switch (currentPage) {
@@ -32,10 +31,10 @@ function App() {
   };
 
   return (
-    <div className="min-h-screen">
-      <Header currentPage={currentPage} onNavigate={setCurrentPage} onSidebarToggle={setIsSidebarOpen} />
-      <main className={`relative transition-all duration-500 ${isSidebarOpen ? 'lg:ml-[340px]' : 'lg:ml-0'}`}>{renderPage()}</main>
-      <Footer isSidebarOpen={isSidebarOpen} />
+    <div className="min-h-screen bg-vietnam-black">
+      <Sidebar currentPage={currentPage} onNavigate={setCurrentPage} />
+      <main>{renderPage()}</main>
+      <Footer />
     </div>
   );
 }

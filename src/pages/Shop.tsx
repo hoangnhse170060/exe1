@@ -53,7 +53,7 @@ export default function Shop() {
   };
 
   return (
-    <div className="min-h-screen bg-vietnam-black pt-20">
+    <div className="min-h-screen bg-vietnam-black pt-0">
       <div className="relative h-80 bg-cover bg-center" style={{
         backgroundImage: 'linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.8)), url(https://images.pexels.com/photos/1040945/pexels-photo-1040945.jpeg)',
       }}>
