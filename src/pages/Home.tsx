@@ -1,309 +1,296 @@
-import { useState, useEffect } from 'react';
-import { Menu, X, Clock, Facebook, Instagram, Twitter, ChevronLeft, ChevronRight } from 'lucide-react';
+import { useState, useEffect } from "react";
+import { motion } from "motion/react";
+import { ImageWithFallback } from "./figma/ImageWithFallback";
+import { Button } from "./ui/button";
+import { ArrowRight } from "lucide-react";
 
-type HeaderProps = {
-  currentPage: string;
-  onNavigate: (page: string) => void;
-  onSidebarToggle?: (isOpen: boolean) => void;
-};
-
-export default function Header({ currentPage, onNavigate, onSidebarToggle }: HeaderProps) {
-  const [isSidebarOpen, setIsSidebarOpen] = useState(true);
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false); // ✅ FIXED
+export function HomePage() {
+  const [scrollY, setScrollY] = useState(0);
 
   useEffect(() => {
-    if (onSidebarToggle) onSidebarToggle(isSidebarOpen);
-  }, [isSidebarOpen, onSidebarToggle]);
-
-  const navItems = [
-    { id: 'home', label: 'TRANG CHỦ' },
-    { id: 'history', label: 'LỊCH SỬ' },
-    { id: 'shop', label: 'SHOP' },
-    { id: 'forum', label: 'DIỄN ĐÀN' },
-    { id: 'services', label: 'DỊCH VỤ' },
-    { id: 'contact', label: 'LIÊN HỆ' },
-  ];
+    const handleScroll = () => setScrollY(window.scrollY);
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   return (
-    <>
-      {/* ===== Desktop Sidebar ===== */}
-      <aside
-        className={`hidden lg:flex fixed top-0 h-screen z-50 transition-all duration-500 ease-in-out overflow-hidden ${
-          isSidebarOpen ? 'left-0 w-[340px]' : 'left-[-340px] w-[340px]'
-        }`}
-        style={{ boxShadow: '4px 0 24px rgba(0,0,0,0.12)' }}
-      >
-        {/* Gold strip */}
-        <div
-          className="w-[90px] h-full flex flex-col items-center py-8 relative overflow-hidden"
-          style={{
-            background: 'linear-gradient(180deg, #B78B3B 0%, #CBA26A 50%, #B78B3B 100%)',
-          }}
+    <div className="min-h-screen">
+      {/* Hero Section */}
+      <section className="relative h-screen flex items-center justify-center overflow-hidden">
+        {/* Parallax Background */}
+        <motion.div 
+          className="absolute inset-0"
+          style={{ y: scrollY * 0.5 }}
         >
-          <div
-            className="absolute inset-0 opacity-10"
-            style={{
-              backgroundImage:
-                'repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(255,255,255,0.1) 2px, rgba(255,255,255,0.1) 4px)',
-            }}
-          ></div>
-          <div className="relative w-full h-full flex flex-col items-center justify-center space-y-8">
-            <div className="w-1 h-16 bg-gradient-to-b from-transparent via-white/40 to-transparent rounded-full"></div>
-          </div>
+          <ImageWithFallback
+            src="https://images.unsplash.com/photo-1758182042983-e87a6fc89053?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHx2aWV0bmFtJTIwZmxhZyUyMGhlcml0YWdlfGVufDF8fHx8MTc2MTE4MDIzM3ww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral"
+            alt="Vietnam Heritage"
+            className="w-full h-full object-cover scale-110"
+          />
+          <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-black/60 to-background/90" />
+        </motion.div>
+
+        {/* Decorative Elements */}
+        <div className="absolute inset-0 pointer-events-none">
+          {/* Top decorative pattern */}
+          <motion.div 
+            initial={{ opacity: 0, y: -50 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.5, duration: 1 }}
+            className="absolute top-8 left-1/2 -translate-x-1/2"
+          >
+            <svg viewBox="0 0 200 100" className="w-48 h-24 text-primary/20" fill="currentColor">
+              <path d="M10 50 Q 50 20, 100 50 T 190 50" stroke="currentColor" strokeWidth="1" fill="none" opacity="0.5"/>
+              <circle cx="100" cy="50" r="3" />
+              <circle cx="40" cy="40" r="2" opacity="0.7"/>
+              <circle cx="160" cy="40" r="2" opacity="0.7"/>
+            </svg>
+          </motion.div>
+
+          {/* Vietnamese pattern decorations */}
+          <motion.div
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ delay: 0.8, duration: 1 }}
+            className="absolute top-1/4 left-12 w-32 h-32 opacity-10"
+          >
+            <svg viewBox="0 0 100 100" className="w-full h-full text-primary" fill="currentColor">
+              <circle cx="50" cy="50" r="45" fill="none" stroke="currentColor" strokeWidth="0.5"/>
+              <circle cx="50" cy="50" r="35" fill="none" stroke="currentColor" strokeWidth="0.5"/>
+              <circle cx="50" cy="50" r="25" fill="none" stroke="currentColor" strokeWidth="0.5"/>
+              <path d="M50 5 L50 95 M5 50 L95 50" stroke="currentColor" strokeWidth="0.5" opacity="0.5"/>
+            </svg>
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ delay: 1, duration: 1 }}
+            className="absolute bottom-1/4 right-12 w-40 h-40 opacity-10"
+          >
+            <svg viewBox="0 0 100 100" className="w-full h-full text-primary" fill="currentColor">
+              <path d="M50 10 L55 40 L85 40 L62 58 L70 88 L50 70 L30 88 L38 58 L15 40 L45 40 Z" opacity="0.6"/>
+            </svg>
+          </motion.div>
         </div>
 
-        {/* Main dark panel */}
-        <div
-          className="w-[250px] h-full flex flex-col relative"
-          style={{
-            background: 'linear-gradient(135deg, #1A1A1A 0%, #0D0D0D 100%)',
-          }}
+        <motion.div 
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1 }}
+          className="relative z-10 text-center px-8 max-w-6xl"
         >
-          <div
-            className="absolute inset-0 opacity-5 pointer-events-none"
-            style={{
-              backgroundImage:
-                'radial-gradient(circle at 50% 0%, #CBA26A 0%, transparent 70%)',
-            }}
-          ></div>
-
-          {/* Logo */}
-          <div
-            className="px-7 pt-12 pb-8 cursor-pointer group relative"
-            onClick={() => onNavigate('home')}
+          {/* Decorative Header with Clock Icon */}
+          <motion.div 
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ delay: 0.3, duration: 0.8 }}
+            className="mb-12"
           >
-            <div className="flex items-center space-x-4 relative z-10">
-              <div className="w-14 h-14 flex items-center justify-center transition-all duration-500 group-hover:scale-110 group-hover:rotate-12 relative">
-                <div className="absolute inset-0 bg-gradient-to-br from-[#CBA26A] to-[#B78B3B] opacity-20 rounded-full blur-lg group-hover:opacity-40 transition-opacity duration-500"></div>
-                <svg
-                  className="w-full h-full text-[#CBA26A] relative z-10 drop-shadow-lg"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="1.5"
-                  strokeLinecap="round"
+            <div className="inline-block mb-8">
+              <div className="flex items-center gap-6 mb-8">
+                <motion.div 
+                  animate={{ width: [0, 80] }}
+                  transition={{ delay: 0.5, duration: 0.8 }}
+                  className="h-px bg-gradient-to-r from-transparent to-primary"
+                />
+                
+                {/* Clock Icon */}
+                <motion.div
+                  animate={{ rotate: 360 }}
+                  transition={{ delay: 0.8, duration: 2, ease: "easeInOut" }}
                 >
-                  <circle cx="12" cy="12" r="10" />
-                  <path d="M12 6v6l4 2" />
-                </svg>
+                  <svg viewBox="0 0 60 60" className="w-16 h-16 text-primary drop-shadow-[0_0_15px_rgba(139,105,20,0.5)]">
+                    <circle cx="30" cy="30" r="28" fill="none" stroke="currentColor" strokeWidth="2" opacity="0.3"/>
+                    <circle cx="30" cy="30" r="24" fill="none" stroke="currentColor" strokeWidth="1.5" opacity="0.5"/>
+                    <path d="M30 10 L30 30 L45 40" stroke="currentColor" strokeWidth="2.5" fill="none" strokeLinecap="round" strokeLinejoin="round"/>
+                    <circle cx="30" cy="30" r="3" fill="currentColor"/>
+                    {/* Hour marks */}
+                    <circle cx="30" cy="8" r="1.5" fill="currentColor" opacity="0.6"/>
+                    <circle cx="30" cy="52" r="1.5" fill="currentColor" opacity="0.6"/>
+                    <circle cx="8" cy="30" r="1.5" fill="currentColor" opacity="0.6"/>
+                    <circle cx="52" cy="30" r="1.5" fill="currentColor" opacity="0.6"/>
+                  </svg>
+                </motion.div>
+                
+                <motion.div 
+                  animate={{ width: [0, 80] }}
+                  transition={{ delay: 0.5, duration: 0.8 }}
+                  className="h-px bg-gradient-to-l from-transparent to-primary"
+                />
               </div>
-              <div>
-                <h1
-                  className="text-[15px] font-serif font-light tracking-[0.25em] text-white/90 uppercase leading-tight transition-colors duration-300 group-hover:text-[#CBA26A]"
-                  style={{ fontFamily: 'Playfair Display, serif' }}
-                >
-                  ECHOES OF
-                </h1>
-                <p
-                  className="text-xs font-serif text-[#CBA26A] tracking-[0.2em] mt-0.5"
-                  style={{ fontFamily: 'Playfair Display, serif' }}
-                >
-                  VIỆT NAM
+            </div>
+            
+            <motion.h1 
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.6, duration: 0.8 }}
+              className="text-6xl md:text-8xl text-white mb-4 tracking-wider drop-shadow-2xl" 
+              style={{ fontFamily: 'serif' }}
+            >
+              Echoes of Viet Nam
+            </motion.h1>
+            
+            <motion.div 
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 1, duration: 0.8 }}
+              className="flex items-center justify-center gap-3 mb-12"
+            >
+              <motion.div 
+                animate={{ scale: [1, 1.2, 1] }}
+                transition={{ repeat: Infinity, duration: 2, delay: 0 }}
+                className="w-2 h-2 bg-primary rounded-full shadow-[0_0_10px_rgba(139,105,20,0.8)]" 
+              />
+              <motion.div 
+                animate={{ scale: [1, 1.2, 1] }}
+                transition={{ repeat: Infinity, duration: 2, delay: 0.3 }}
+                className="w-2 h-2 bg-primary rounded-full shadow-[0_0_10px_rgba(139,105,20,0.8)]" 
+              />
+              <motion.div 
+                animate={{ scale: [1, 1.2, 1] }}
+                transition={{ repeat: Infinity, duration: 2, delay: 0.6 }}
+                className="w-2 h-2 bg-primary rounded-full shadow-[0_0_10px_rgba(139,105,20,0.8)]" 
+              />
+            </motion.div>
+          </motion.div>
+
+          {/* Welcome Message */}
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.9, duration: 0.8 }}
+            className="space-y-6 mb-12"
+          >
+            <p className="text-3xl md:text-4xl text-white/90" style={{ fontFamily: 'serif' }}>
+              Chào mừng bạn đến với
+            </p>
+            <h2 className="text-4xl md:text-6xl text-primary tracking-wide drop-shadow-[0_0_20px_rgba(139,105,20,0.6)]" style={{ fontFamily: 'serif' }}>
+              Thế Giới Lịch Sử Việt Nam
+            </h2>
+          </motion.div>
+
+          <motion.p 
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 1.2, duration: 0.8 }}
+            className="text-xl text-white/80 mb-12 max-w-3xl mx-auto leading-relaxed"
+          >
+            Hành trình khám phá những dấu ấn lịch sử hào hùng, từ những ngày đấu tranh giành độc lập 
+            đến thời đại xây dựng và phát triển đất nước
+          </motion.p>
+
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 1.4, duration: 0.8 }}
+            className="flex flex-wrap gap-4 justify-center"
+          >
+            <Button size="lg" className="bg-primary hover:bg-primary/90 text-white gap-2 px-10 py-6 rounded-sm shadow-[0_0_20px_rgba(139,105,20,0.4)] hover:shadow-[0_0_30px_rgba(139,105,20,0.6)] transition-all">
+              Bắt Đầu Khám Phá <ArrowRight className="w-5 h-5" />
+            </Button>
+            <Button size="lg" variant="outline" className="border-white/30 text-white hover:bg-white/10 rounded-sm px-10 py-6 backdrop-blur-sm">
+              Tìm Hiểu Thêm
+            </Button>
+          </motion.div>
+        </motion.div>
+
+        {/* Side Decorative Indicators */}
+        <motion.div 
+          initial={{ opacity: 0, x: 50 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ delay: 1.5, duration: 0.8 }}
+          className="absolute right-8 top-1/2 -translate-y-1/2 flex flex-col gap-3"
+        >
+          <motion.div 
+            animate={{ y: [0, -5, 0] }}
+            transition={{ repeat: Infinity, duration: 2 }}
+            className="w-px h-12 bg-gradient-to-b from-transparent via-primary to-transparent"
+          />
+          <div className="w-2 h-2 bg-primary rounded-full shadow-[0_0_8px_rgba(139,105,20,0.8)]" />
+          <div className="w-2 h-2 bg-white/50 rounded-full" />
+          <div className="w-2 h-2 bg-white/30 rounded-full" />
+        </motion.div>
+
+        {/* Decorative scroll indicator */}
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 2, duration: 0.8 }}
+          className="absolute bottom-12 left-1/2 -translate-x-1/2"
+        >
+          <motion.div
+            animate={{ y: [0, 10, 0] }}
+            transition={{ repeat: Infinity, duration: 2 }}
+          >
+            <div className="w-6 h-10 border-2 border-white/40 rounded-full flex items-start justify-center p-2">
+              <motion.div 
+                animate={{ y: [0, 12, 0] }}
+                transition={{ repeat: Infinity, duration: 2 }}
+                className="w-1.5 h-3 bg-white/60 rounded-full"
+              />
+            </div>
+          </motion.div>
+          <p className="text-white/60 text-xs mt-3 tracking-wider">SCROLL</p>
+        </motion.div>
+      </section>
+
+      {/* Mission Section */}
+      <section className="py-32 bg-background relative overflow-hidden">
+        <div className="absolute inset-0 opacity-5">
+          <div className="absolute top-20 left-10 w-64 h-64 border border-primary/30 rounded-full" />
+          <div className="absolute bottom-20 right-10 w-96 h-96 border border-primary/30 rounded-full" />
+        </div>
+        
+        <div className="container mx-auto px-8 relative">
+          <div className="max-w-4xl mx-auto text-center">
+            <div className="w-16 h-1 bg-primary mx-auto mb-8" />
+            <h2 className="text-5xl mb-8" style={{ fontFamily: 'serif' }}>
+              Sứ Mệnh Của Chúng Tôi
+            </h2>
+            <p className="text-xl text-muted-foreground leading-relaxed mb-8">
+              Echoes of Viet Nam được thành lập với sứ mệnh lưu giữ và lan tỏa những giá trị lịch sử quý báu 
+              của dân tộc Việt Nam. Chúng tôi tin rằng, thông qua việc tìm hiểu quá khứ, thế hệ trẻ sẽ hiểu rõ hơn 
+              về nguồn gốc, truyền thống và tự hào về bản sắc văn hóa của mình.
+            </p>
+            <div className="grid md:grid-cols-3 gap-8 mt-16">
+              <div className="p-6 border border-border rounded-lg hover:border-primary/50 transition-colors">
+                <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <svg className="w-6 h-6 text-primary" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                    <path d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+                  </svg>
+                </div>
+                <h3 className="text-xl mb-3">Giáo Dục</h3>
+                <p className="text-muted-foreground text-sm">
+                  Cung cấp kiến thức lịch sử chính xác và sinh động
+                </p>
+              </div>
+              <div className="p-6 border border-border rounded-lg hover:border-primary/50 transition-colors">
+                <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <svg className="w-6 h-6 text-primary" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                    <path d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9" />
+                  </svg>
+                </div>
+                <h3 className="text-xl mb-3">Lan Tỏa</h3>
+                <p className="text-muted-foreground text-sm">
+                  Kết nối cộng đồng yêu lịch sử Việt Nam
+                </p>
+              </div>
+              <div className="p-6 border border-border rounded-lg hover:border-primary/50 transition-colors">
+                <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <svg className="w-6 h-6 text-primary" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                    <path d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+                  </svg>
+                </div>
+                <h3 className="text-xl mb-3">Lưu Giữ</h3>
+                <p className="text-muted-foreground text-sm">
+                  Bảo tồn di sản văn hóa cho thế hệ tương lai
                 </p>
               </div>
             </div>
-            <div className="absolute bottom-0 left-7 right-7 h-px bg-gradient-to-r from-transparent via-[#CBA26A]/30 to-transparent"></div>
-          </div>
-
-          {/* Navigation */}
-          <nav className="flex-1 px-5 py-10 flex flex-col justify-center space-y-1.5">
-            {navItems.map((item, index) => (
-              <button
-                key={item.id}
-                onClick={() => onNavigate(item.id)}
-                className={`group relative w-full text-left text-[13px] font-sans tracking-[0.08em] transition-all duration-300 py-4 px-5 rounded-xl overflow-hidden ${
-                  currentPage === item.id
-                    ? 'text-[#CBA26A] font-semibold'
-                    : 'text-white/70 hover:text-[#CBA26A] font-medium'
-                }`}
-                style={{
-                  fontFamily: 'Poppins, sans-serif',
-                  transitionDelay: `${index * 30}ms`,
-                }}
-              >
-                <div
-                  className={`absolute inset-0 transition-all duration-300 ${
-                    currentPage === item.id
-                      ? 'bg-gradient-to-r from-[#CBA26A]/15 to-[#CBA26A]/5'
-                      : 'bg-transparent group-hover:bg-[#CBA26A]/5'
-                  }`}
-                ></div>
-                <div
-                  className={`absolute left-0 top-1/2 -translate-y-1/2 w-1 h-0 transition-all duration-300 rounded-r-full ${
-                    currentPage === item.id
-                      ? 'h-full bg-gradient-to-b from-[#CBA26A] to-[#B78B3B]'
-                      : 'group-hover:h-3/4 bg-[#CBA26A]/50'
-                  }`}
-                ></div>
-                <div className="absolute right-4 top-1/2 -translate-y-1/2 w-1.5 h-1.5 rounded-full bg-[#CBA26A] opacity-0 group-hover:opacity-100 transition-all duration-300"></div>
-                <span className="relative z-10 block transition-transform duration-300 group-hover:translate-x-1.5">
-                  {item.label}
-                </span>
-              </button>
-            ))}
-          </nav>
-
-          {/* Footer */}
-          <div className="px-7 pb-10 space-y-7 relative z-10">
-            <div className="relative">
-              <div className="absolute -top-4 left-0 right-0 h-px bg-gradient-to-r from-transparent via-[#CBA26A]/30 to-transparent"></div>
-              <div className="flex items-start space-x-3 pt-6 group cursor-default">
-                <div className="mt-0.5">
-                  <Clock
-                    size={18}
-                    className="text-[#CBA26A] group-hover:rotate-180 transition-transform duration-700"
-                  />
-                </div>
-                <div className="flex-1">
-                  <span className="text-[11px] font-sans tracking-[0.1em] text-white/60 uppercase block mb-2.5">
-                    Giờ làm việc
-                  </span>
-                  <p className="text-xs text-white/80 leading-relaxed font-light">
-                    <span className="text-[#CBA26A] font-medium">T2 - T6:</span>{' '}
-                    9:00 - 18:00
-                    <br />
-                    <span className="text-[#CBA26A] font-medium">T7 - CN:</span>{' '}
-                    10:00 - 16:00
-                  </p>
-                </div>
-              </div>
-            </div>
-
-            {/* Social */}
-            <div>
-              <p className="text-[11px] font-sans tracking-[0.1em] text-white/60 uppercase mb-4">
-                Kết nối với chúng tôi
-              </p>
-              <div className="flex space-x-3">
-                {[Facebook, Instagram, Twitter].map((Icon, i) => (
-                  <a
-                    key={i}
-                    href="#"
-                    className="relative w-10 h-10 rounded-xl flex items-center justify-center text-[#CBA26A] transition-all duration-300 hover:scale-110 hover:-translate-y-1 group overflow-hidden"
-                    style={{
-                      background:
-                        'linear-gradient(135deg, rgba(203,162,106,0.1) 0%, rgba(183,139,59,0.1) 100%)',
-                    }}
-                  >
-                    <div className="absolute inset-0 bg-gradient-to-br from-[#CBA26A] to-[#B78B3B] opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                    <Icon
-                      size={16}
-                      className="relative z-10 group-hover:text-white transition-colors duration-300"
-                    />
-                  </a>
-                ))}
-              </div>
-            </div>
           </div>
         </div>
-      </aside>
-
-      {/* Sidebar toggle button */}
-      <button
-        onClick={() => setIsSidebarOpen(!isSidebarOpen)}
-        className={`hidden lg:flex fixed top-1/2 -translate-y-1/2 z-50 w-12 h-20 items-center justify-center transition-all duration-500 group relative overflow-hidden ${
-          isSidebarOpen ? 'left-[340px]' : 'left-0'
-        }`}
-        style={{
-          borderRadius: '0 12px 12px 0',
-          background: 'linear-gradient(135deg, #B78B3B 0%, #CBA26A 100%)',
-          boxShadow: '2px 0 16px rgba(183,139,59,0.3)',
-        }}
-      >
-        <div className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/20 to-white/0 -translate-x-full group-hover:translate-x-full transition-transform duration-700"></div>
-        {isSidebarOpen ? (
-          <ChevronLeft
-            size={22}
-            className="text-white relative z-10 transition-transform duration-300 group-hover:scale-110"
-            strokeWidth={2.5}
-          />
-        ) : (
-          <ChevronRight
-            size={22}
-            className="text-white relative z-10 transition-transform duration-300 group-hover:scale-110"
-            strokeWidth={2.5}
-          />
-        )}
-      </button>
-
-      {/* ===== Mobile Header ===== */}
-      <header className="lg:hidden fixed top-0 left-0 right-0 z-50 bg-[#FAF9F7] h-[70px] border-b border-[#CBA26A]/10 shadow-md">
-        <div
-          className="absolute inset-0 pointer-events-none opacity-[0.08] mix-blend-multiply"
-          style={{
-            backgroundImage: 'url(/image copy copy.png)',
-            backgroundRepeat: 'no-repeat',
-            backgroundPosition: 'center',
-            backgroundSize: 'auto 80%',
-          }}
-        ></div>
-
-        <div className="px-4 sm:px-6 relative z-10 h-full flex items-center justify-between">
-          {/* Logo */}
-          <div
-            className="flex items-center cursor-pointer group"
-            onClick={() => onNavigate('home')}
-          >
-            <div className="w-10 h-10 mr-3 flex items-center justify-center transition-transform duration-300 group-hover:scale-110">
-              <svg
-                className="w-full h-full text-[#CBA26A]"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="1.5"
-              >
-                <circle cx="12" cy="12" r="10" />
-                <path d="M12 6v6l4 2" />
-              </svg>
-            </div>
-            <div>
-              <h1 className="text-base font-serif font-light tracking-[0.2em] text-[#2B2B2B] uppercase">
-                ECHOES OF
-              </h1>
-              <p className="text-xs font-serif text-[#CBA26A] tracking-[0.15em]">
-                VIỆT NAM
-              </p>
-            </div>
-          </div>
-
-          {/* Mobile Menu Button */}
-          <button
-            className="text-[#2B2B2B] hover:text-[#CBA26A] transition-all duration-300 hover:scale-110"
-            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-          >
-            {isMobileMenuOpen ? (
-              <X size={24} strokeWidth={1.5} />
-            ) : (
-              <Menu size={24} strokeWidth={1.5} />
-            )}
-          </button>
-        </div>
-
-        {/* Mobile Menu */}
-        {isMobileMenuOpen && (
-          <div className="bg-[#FAF9F7] backdrop-blur-lg border-t border-[#CBA26A]/20 animate-slide-in">
-            <nav className="px-6 py-8 space-y-3">
-              {navItems.map((item) => (
-                <button
-                  key={item.id}
-                  onClick={() => {
-                    onNavigate(item.id);
-                    setIsMobileMenuOpen(false);
-                  }}
-                  className={`block w-full text-left text-base font-sans tracking-wide py-3 transition-all duration-300 rounded-lg px-4 ${
-                    currentPage === item.id
-                      ? 'text-[#CBA26A] bg-[#CBA26A]/10 font-semibold border-l-4 border-[#CBA26A]'
-                      : 'text-[#2B2B2B] hover:text-[#CBA26A] hover:bg-[#CBA26A]/5 hover:translate-x-1'
-                  }`}
-                  style={{ fontFamily: 'Poppins, sans-serif' }}
-                >
-                  {item.label}
-                </button>
-              ))}
-            </nav>
-          </div>
-        )}
-      </header>
-    </>
+      </section>
+    </div>
   );
 }

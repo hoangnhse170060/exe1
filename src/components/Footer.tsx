@@ -1,41 +1,64 @@
-import { Facebook, Youtube, Instagram } from 'lucide-react';
-
 type FooterProps = {
-  isSidebarOpen?: boolean;
+  isSidebarOpen: boolean;
 };
 
-export default function Footer({ isSidebarOpen = true }: FooterProps) {
-  const socialLinks = [
-    { icon: Facebook, label: 'Facebook', url: '#' },
-    { icon: Youtube, label: 'YouTube', url: '#' },
-    { icon: Instagram, label: 'Instagram', url: '#' },
-  ];
-
+export default function Footer({ isSidebarOpen }: FooterProps) {
   return (
-    <footer className={`bg-vietnam-black border-t border-vietnam-red/20 py-8 transition-all duration-500 ${isSidebarOpen ? 'lg:ml-[240px]' : 'lg:ml-0'}`}>
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex flex-col items-center space-y-6">
-          <div className="flex space-x-6">
-            {socialLinks.map((social) => (
-              <a
-                key={social.label}
-                href={social.url}
-                aria-label={social.label}
-                className="text-vietnam-white hover:text-vietnam-red transition-colors duration-300"
-              >
-                <social.icon size={24} />
-              </a>
-            ))}
+    <footer
+      className={`bg-gradient-slate text-white py-16 transition-all duration-500 ${
+        isSidebarOpen ? 'lg:ml-80' : 'lg:ml-0'
+      }`}
+    >
+      <div className="max-w-7xl mx-auto px-8">
+        <div className="grid md:grid-cols-4 gap-12">
+          <div>
+            <h3 className="text-xl font-serif mb-6">Echoes of Việt Nam</h3>
+            <p className="text-sm text-slate-300 leading-relaxed">
+              Bảo tồn và lan tỏa di sản lịch sử văn hóa quý báu của dân tộc Việt Nam
+            </p>
           </div>
 
-          <div className="text-center">
-            <p className="text-vietnam-gold font-serif text-sm mb-2">
-              Nơi quá khứ ngân vang trong từng hơi thở hiện đại
-            </p>
-            <p className="text-vietnam-white/60 text-xs">
-              © 2025 Try Your Best – Echoes of Việt Nam
-            </p>
+          <div>
+            <h4 className="text-sm font-medium tracking-wider uppercase mb-6 text-bronze-300">
+              Khám Phá
+            </h4>
+            <ul className="space-y-3 text-sm text-slate-300">
+              <li><a href="#" className="hover:text-white transition-colors">Lịch Sử</a></li>
+              <li><a href="#" className="hover:text-white transition-colors">Dịch Vụ</a></li>
+              <li><a href="#" className="hover:text-white transition-colors">Cửa Hàng</a></li>
+              <li><a href="#" className="hover:text-white transition-colors">Cộng Đồng</a></li>
+            </ul>
           </div>
+
+          <div>
+            <h4 className="text-sm font-medium tracking-wider uppercase mb-6 text-bronze-300">
+              Hỗ Trợ
+            </h4>
+            <ul className="space-y-3 text-sm text-slate-300">
+              <li><a href="#" className="hover:text-white transition-colors">Liên Hệ</a></li>
+              <li><a href="#" className="hover:text-white transition-colors">Câu Hỏi Thường Gặp</a></li>
+              <li><a href="#" className="hover:text-white transition-colors">Chính Sách</a></li>
+              <li><a href="#" className="hover:text-white transition-colors">Điều Khoản</a></li>
+            </ul>
+          </div>
+
+          <div>
+            <h4 className="text-sm font-medium tracking-wider uppercase mb-6 text-bronze-300">
+              Kết Nối
+            </h4>
+            <ul className="space-y-3 text-sm text-slate-300">
+              <li><a href="#" className="hover:text-white transition-colors">Facebook</a></li>
+              <li><a href="#" className="hover:text-white transition-colors">Instagram</a></li>
+              <li><a href="#" className="hover:text-white transition-colors">YouTube</a></li>
+              <li><a href="#" className="hover:text-white transition-colors">LinkedIn</a></li>
+            </ul>
+          </div>
+        </div>
+
+        <div className="mt-12 pt-8 border-t border-slate-700 text-center">
+          <p className="text-sm text-slate-400">
+            © 2024 Echoes of Việt Nam. Bản quyền thuộc về công ty.
+          </p>
         </div>
       </div>
     </footer>
