@@ -115,8 +115,8 @@ export default function Header({ currentPage, onNavigate, onSidebarToggle }: Hea
 
       <button
         onClick={() => setIsSidebarOpen(!isSidebarOpen)}
-        className={`hidden lg:flex fixed top-1/2 -translate-y-1/2 z-50 w-12 h-16 bg-[#B78B3B] items-center justify-center transition-all duration-300 hover:bg-[#CBA26A] ${
-          isSidebarOpen ? 'left-[20px]' : 'left-[-48px]'
+        className={`hidden lg:flex fixed top-1/2 -translate-y-1/2 z-50 w-16 h-12 bg-[#B78B3B] items-center justify-center transition-all duration-300 hover:bg-[#CBA26A] ${
+          isSidebarOpen ? 'left-[20px]' : 'left-[-64px]'
         }`}
         style={{ borderRadius: '8px' }}
       >
