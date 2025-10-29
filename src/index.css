@@ -10,7 +10,7 @@
   }
 
   body {
-    @apply bg-cream-200 text-charcoal-900 font-sans;
+    @apply bg-brand-base text-brand-text font-sans;
   }
 
   h1, h2, h3, h4, h5, h6 {
@@ -25,15 +25,15 @@
 
 @layer components {
   .btn-primary {
-    @apply px-8 py-4 bg-vietnam-gold text-white font-sans text-sm tracking-wider uppercase transition-all duration-300 hover:bg-vietnam-gold-600 hover:shadow-gold;
+    @apply px-8 py-4 bg-brand-blue text-white font-sans text-sm tracking-wider uppercase transition-all duration-300 hover:bg-brand-blue-600 hover:shadow-brand;
   }
 
   .btn-secondary {
-    @apply px-8 py-4 border-2 border-vietnam-gold text-vietnam-gold font-sans text-sm tracking-wider uppercase transition-all duration-300 hover:bg-vietnam-gold hover:text-white;
+    @apply px-8 py-4 border-2 border-brand-blue text-brand-blue font-sans text-sm tracking-wider uppercase transition-all duration-300 hover:bg-brand-blue hover:text-white;
   }
 
   .btn-outline {
-    @apply px-6 py-3 border border-charcoal-300 text-charcoal-700 font-sans text-sm tracking-wide transition-all duration-300 hover:border-vietnam-gold hover:text-vietnam-gold;
+    @apply px-6 py-3 border border-charcoal-200 text-charcoal-500 font-sans text-sm tracking-wide transition-all duration-300 hover:border-brand-blue hover:text-brand-blue;
   }
 
   .card {
@@ -41,12 +41,12 @@
   }
 
   .section-title {
-    @apply text-4xl md:text-5xl lg:text-6xl font-serif text-charcoal-900 mb-6;
+    @apply text-4xl md:text-5xl lg:text-6xl font-serif text-brand-text mb-6;
     letter-spacing: -0.02em;
   }
 
   .section-subtitle {
-    @apply text-lg md:text-xl text-charcoal-500 leading-relaxed;
+    @apply text-lg md:text-xl text-brand-muted leading-relaxed;
   }
 }
 
@@ -70,7 +70,7 @@
     content: '';
     position: absolute;
     inset: 0;
-    background: linear-gradient(to bottom, rgba(0,0,0,0.4), rgba(0,0,0,0.6));
+    background: linear-gradient(to bottom, rgba(47,58,69,0.25), rgba(47,58,69,0.45));
     pointer-events: none;
   }
 
@@ -91,10 +91,10 @@
   }
 
   .sidebar-elegant {
-    background: linear-gradient(135deg, rgba(253, 251, 247, 0.98) 0%, rgba(250, 246, 240, 0.98) 50%, rgba(245, 241, 232, 0.98) 100%);
+    background: linear-gradient(135deg, rgba(245, 239, 230, 0.98) 0%, rgba(232, 223, 202, 0.98) 50%, rgba(203, 220, 235, 0.98) 100%);
     backdrop-filter: blur(12px);
     box-shadow: 4px 0 30px rgba(0, 0, 0, 0.1);
-    border-right: 1px solid rgba(196, 166, 118, 0.2);
+    border-right: 1px solid rgba(109, 148, 197, 0.25);
   }
 
   .menu-item-elegant {
@@ -109,7 +109,7 @@
     left: 0;
     width: 0;
     height: 2px;
-    background-color: #c4a676;
+    background-color: #6D94C5;
     transition: width 0.35s ease;
   }
 
@@ -124,6 +124,6 @@
     left: 0;
     width: 100%;
     height: 2px;
-    background-color: #c4a676;
+    background-color: #6D94C5;
   }
 }

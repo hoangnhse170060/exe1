@@ -1,26 +1,67 @@
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { ChevronDown, Globe, Heart, BookOpen, ArrowRight, Star } from 'lucide-react';
 import { useScrollAnimation } from '../hooks/useScrollAnimation';
+import { supabase, type Product } from '../lib/supabase';
+import { mockProducts } from '../data/mockShop';
 
-type HomeProps = {
-  onNavigate: (page: string) => void;
-};
-
-export default function Home({ onNavigate }: HomeProps) {
+export default function Home() {
+  const navigate = useNavigate();
+  const [featuredProducts, setFeaturedProducts] = useState<Product[]>([]);
+  const [productsLoading, setProductsLoading] = useState(true);
+  const [productsError, setProductsError] = useState<string | null>(null);
   useScrollAnimation();
-  const [isScrolled, setIsScrolled] = useState(false);
 
   useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 50);
+    let active = true;
+
+    const loadProducts = async () => {
+      try {
+        setProductsLoading(true);
+        const { data, error } = await supabase
+          .from('products')
+          .select('*')
+          .order('created_at', { ascending: false })
+          .limit(6);
+
+        if (error) throw error;
+        if (!active) return;
+        const typed = (data as Product[]) || [];
+        if (!typed.length) {
+          setFeaturedProducts(mockProducts.slice(0, 6));
+          setProductsError('Hiển thị dữ liệu minh hoạ.');
+        } else {
+          setFeaturedProducts(typed);
+          setProductsError(null);
+        }
+      } catch (error: any) {
+        if (!active) return;
+        setFeaturedProducts(mockProducts.slice(0, 6));
+        setProductsError('Hiển thị dữ liệu minh hoạ.');
+      } finally {
+        if (active) {
+          setProductsLoading(false);
+        }
+      }
     };
 
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    loadProducts();
+
+    return () => {
+      active = false;
+    };
   }, []);
 
+  const handleOpenProduct = (productId: string) => {
+    sessionStorage.setItem('highlightProduct', productId);
+    navigate('/shop');
+  };
+
+  const formatPrice = (price: number) =>
+    new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(price);
+
   return (
-    <div className="relative min-h-screen bg-cream-200">
+    <div className="relative min-h-screen bg-brand-base">
       <section className="relative h-screen bg-cover bg-center bg-no-repeat gradient-overlay" style={{
         backgroundImage: 'url(https://images.pexels.com/photos/672532/pexels-photo-672532.jpeg)',
       }}>
@@ -32,16 +73,16 @@ export default function Home({ onNavigate }: HomeProps) {
             </h1>
 
             <div className="flex items-center justify-center space-x-2.5 mb-10">
-              <div className="w-2.5 h-2.5 rounded-full bg-vietnam-gold-400 animate-pulse"></div>
-              <div className="w-2.5 h-2.5 rounded-full bg-vietnam-gold-400 animate-pulse" style={{ animationDelay: '0.2s' }}></div>
-              <div className="w-2.5 h-2.5 rounded-full bg-vietnam-gold-400 animate-pulse" style={{ animationDelay: '0.4s' }}></div>
+              <div className="w-2.5 h-2.5 rounded-full bg-brand-blue animate-pulse"></div>
+              <div className="w-2.5 h-2.5 rounded-full bg-brand-blue animate-pulse" style={{ animationDelay: '0.2s' }}></div>
+              <div className="w-2.5 h-2.5 rounded-full bg-brand-blue animate-pulse" style={{ animationDelay: '0.4s' }}></div>
             </div>
 
             <p className="text-xl sm:text-2xl md:text-3xl text-white/95 mb-5 font-serif text-shadow-md">
               Chào mừng bạn đến với
             </p>
 
-            <h2 className="text-4xl sm:text-5xl md:text-6xl font-serif text-vietnam-gold-300 mb-10 text-shadow-md">
+            <h2 className="text-4xl sm:text-5xl md:text-6xl font-serif text-brand-sand mb-10 text-shadow-md">
               Thế Giới Lịch Sử Việt Nam
             </h2>
 
@@ -52,8 +93,8 @@ export default function Home({ onNavigate }: HomeProps) {
 
             <div className="flex flex-wrap justify-center gap-5">
               <button
-                onClick={() => onNavigate('history')}
-                className="group px-10 py-5 bg-vietnam-gold text-white font-sans text-sm tracking-[0.15em] uppercase hover:bg-vietnam-gold-600 transition-all duration-300 flex items-center space-x-3 shadow-strong hover:shadow-gold"
+                onClick={() => navigate('/history')}
+                className="group px-10 py-5 bg-brand-blue text-white font-sans text-sm tracking-[0.15em] uppercase hover:bg-brand-blue-600 transition-all duration-300 flex items-center space-x-3 shadow-strong hover:shadow-brand"
               >
                 <span>Bắt Đầu Khám Phá</span>
                 <ArrowRight className="transition-transform duration-300 group-hover:translate-x-1" size={20} />
@@ -69,16 +110,16 @@ export default function Home({ onNavigate }: HomeProps) {
         </div>
       </section>
 
-      <section className="relative py-24 lg:py-32 px-4 bg-cream-50">
+      <section className="relative py-24 lg:py-32 px-4 bg-brand-sand">
         <div className="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
-          <div className="w-20 h-1 bg-vietnam-gold shadow-gold"></div>
+          <div className="w-20 h-1 bg-brand-blue shadow-brand"></div>
         </div>
 
         <div className="max-w-6xl mx-auto text-center mb-20 scroll-animate">
           <h2 className="section-title text-charcoal-900">
             Sứ Mệnh Của Chúng Tôi
           </h2>
-          <div className="w-16 h-1 bg-vietnam-gold mx-auto mb-8"></div>
+          <div className="w-16 h-1 bg-brand-blue mx-auto mb-8"></div>
           <p className="section-subtitle max-w-4xl mx-auto text-balance">
             Echoes of Việt Nam được thành lập với sứ mệnh lưu giữ và lan tỏa những giá trị lịch sử quý báu của dân
             tộc Việt Nam. Chúng tôi tin rằng, thông qua việc tìm hiểu quá khứ, thế hệ trẻ sẽ hiểu rõ hơn về nguồn
@@ -88,8 +129,8 @@ export default function Home({ onNavigate }: HomeProps) {
 
         <div className="max-w-6xl mx-auto grid md:grid-cols-3 gap-10">
           <div className="card p-10 fade-scroll group hover:scale-105 transition-transform duration-300">
-            <div className="w-16 h-16 bg-vietnam-gold-100 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:bg-vietnam-gold transition-colors duration-300">
-              <BookOpen className="text-vietnam-gold group-hover:text-white transition-colors duration-300" size={32} />
+            <div className="w-16 h-16 bg-brand-sky rounded-full flex items-center justify-center mx-auto mb-6 group-hover:bg-brand-blue transition-colors duration-300">
+              <BookOpen className="text-brand-blue group-hover:text-white transition-colors duration-300" size={32} />
             </div>
             <h3 className="text-2xl font-serif text-charcoal-900 mb-4">Giáo Dục</h3>
             <p className="text-charcoal-600 leading-relaxed">
@@ -98,8 +139,8 @@ export default function Home({ onNavigate }: HomeProps) {
           </div>
 
           <div className="card p-10 fade-scroll group hover:scale-105 transition-transform duration-300">
-            <div className="w-16 h-16 bg-vietnam-gold-100 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:bg-vietnam-gold transition-colors duration-300">
-              <Globe className="text-vietnam-gold group-hover:text-white transition-colors duration-300" size={32} />
+            <div className="w-16 h-16 bg-brand-sky rounded-full flex items-center justify-center mx-auto mb-6 group-hover:bg-brand-blue transition-colors duration-300">
+              <Globe className="text-brand-blue group-hover:text-white transition-colors duration-300" size={32} />
             </div>
             <h3 className="text-2xl font-serif text-charcoal-900 mb-4">Lan Tỏa</h3>
             <p className="text-charcoal-600 leading-relaxed">
@@ -108,8 +149,8 @@ export default function Home({ onNavigate }: HomeProps) {
           </div>
 
           <div className="card p-10 fade-scroll group hover:scale-105 transition-transform duration-300">
-            <div className="w-16 h-16 bg-vietnam-gold-100 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:bg-vietnam-gold transition-colors duration-300">
-              <Heart className="text-vietnam-gold group-hover:text-white transition-colors duration-300" size={32} />
+            <div className="w-16 h-16 bg-brand-sky rounded-full flex items-center justify-center mx-auto mb-6 group-hover:bg-brand-blue transition-colors duration-300">
+              <Heart className="text-brand-blue group-hover:text-white transition-colors duration-300" size={32} />
             </div>
             <h3 className="text-2xl font-serif text-charcoal-900 mb-4">Lưu Giữ</h3>
             <p className="text-charcoal-600 leading-relaxed">
@@ -121,7 +162,7 @@ export default function Home({ onNavigate }: HomeProps) {
 
       <section className="relative py-24 lg:py-32 px-4 bg-white">
         <div className="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
-          <div className="w-20 h-1 bg-vietnam-gold shadow-gold"></div>
+          <div className="w-20 h-1 bg-brand-blue shadow-brand"></div>
         </div>
 
         <div className="max-w-7xl mx-auto">
@@ -129,28 +170,28 @@ export default function Home({ onNavigate }: HomeProps) {
             <h2 className="section-title">
               Dòng Chảy Lịch Sử
             </h2>
-            <div className="w-16 h-1 bg-vietnam-gold mx-auto mb-6"></div>
+            <div className="w-16 h-1 bg-brand-blue mx-auto mb-6"></div>
             <p className="section-subtitle">
               Hành trình đấu tranh giành độc lập và bảo vệ Tổ quốc của dân tộc Việt Nam
             </p>
           </div>
 
           <div className="flex items-center justify-center mb-16 scroll-animate">
-            <button className="w-14 h-14 rounded-full border-2 border-vietnam-gold text-vietnam-gold flex items-center justify-center hover:bg-vietnam-gold hover:text-white transition-all duration-300 shadow-soft hover:shadow-gold">
+            <button className="w-14 h-14 rounded-full border-2 border-brand-blue text-brand-blue flex items-center justify-center hover:bg-brand-blue hover:text-white transition-all duration-300 shadow-soft hover:shadow-brand">
               <ChevronDown className="rotate-90" size={24} />
             </button>
 
             <div className="flex items-center mx-12">
-              <div className="w-14 h-14 rounded-full bg-gradient-gold flex items-center justify-center text-white font-bold shadow-gold text-lg">
+              <div className="w-14 h-14 rounded-full bg-gradient-brand flex items-center justify-center text-white font-bold shadow-brand text-lg">
                 1
               </div>
-              <div className="w-32 h-0.5 bg-gradient-to-r from-vietnam-gold to-charcoal-200 mx-6"></div>
+              <div className="w-32 h-0.5 bg-gradient-to-r from-brand-blue to-brand-sky mx-6"></div>
               <div className="w-14 h-14 rounded-full border-2 border-charcoal-200 flex items-center justify-center text-charcoal-400 font-bold text-lg">
                 2
               </div>
             </div>
 
-            <button className="w-14 h-14 rounded-full border-2 border-vietnam-gold text-vietnam-gold flex items-center justify-center hover:bg-vietnam-gold hover:text-white transition-all duration-300 shadow-soft hover:shadow-gold">
+            <button className="w-14 h-14 rounded-full border-2 border-brand-blue text-brand-blue flex items-center justify-center hover:bg-brand-blue hover:text-white transition-all duration-300 shadow-soft hover:shadow-brand">
               <ChevronDown className="rotate-[-90deg]" size={24} />
             </button>
           </div>
@@ -159,7 +200,7 @@ export default function Home({ onNavigate }: HomeProps) {
 
           <div className="grid lg:grid-cols-2 gap-16 items-center fade-scroll">
             <div className="space-y-8">
-              <div className="inline-block px-5 py-2 bg-vietnam-gold-100 text-vietnam-gold-800 text-sm font-semibold tracking-wide">
+              <div className="inline-block px-5 py-2 bg-brand-sand text-brand-blue text-sm font-semibold tracking-wide">
                 1945 - 1954
               </div>
               <h3 className="text-4xl lg:text-5xl font-serif text-charcoal-900 leading-tight">
@@ -170,23 +211,23 @@ export default function Home({ onNavigate }: HomeProps) {
                 Pháp, khẳng định quyết tự do và độc lập của dân tộc.
               </p>
 
-              <div className="space-y-4 pl-4 border-l-2 border-vietnam-gold-300">
+              <div className="space-y-4 pl-4 border-l-2 border-brand-blue/40">
                 <div className="flex items-start space-x-4">
-                  <div className="w-3 h-3 rounded-full bg-vietnam-gold mt-2 flex-shrink-0 shadow-gold"></div>
+                  <div className="w-3 h-3 rounded-full bg-brand-blue mt-2 flex-shrink-0 shadow-brand"></div>
                   <p className="text-charcoal-700 text-lg">Tổng khởi nghĩa tháng 8/1945</p>
                 </div>
                 <div className="flex items-start space-x-4">
-                  <div className="w-3 h-3 rounded-full bg-vietnam-gold mt-2 flex-shrink-0 shadow-gold"></div>
+                  <div className="w-3 h-3 rounded-full bg-brand-blue mt-2 flex-shrink-0 shadow-brand"></div>
                   <p className="text-charcoal-700 text-lg">Tuyên ngôn độc lập 2/9/1945</p>
                 </div>
                 <div className="flex items-start space-x-4">
-                  <div className="w-3 h-3 rounded-full bg-vietnam-gold mt-2 flex-shrink-0 shadow-gold"></div>
+                  <div className="w-3 h-3 rounded-full bg-brand-blue mt-2 flex-shrink-0 shadow-brand"></div>
                   <p className="text-charcoal-700 text-lg">Chiến thắng Điện Biên Phủ 1954</p>
                 </div>
               </div>
 
               <button
-                onClick={() => onNavigate('history')}
+                onClick={() => navigate('/history')}
                 className="group btn-primary flex items-center space-x-3 mt-8"
               >
                 <span>Tìm Hiểu Chi Tiết</span>
@@ -195,13 +236,13 @@ export default function Home({ onNavigate }: HomeProps) {
             </div>
 
             <div className="relative group">
-              <div className="absolute -inset-4 bg-gradient-gold opacity-20 blur-xl group-hover:opacity-30 transition-opacity duration-500"></div>
+              <div className="absolute -inset-4 bg-gradient-brand opacity-20 blur-xl group-hover:opacity-30 transition-opacity duration-500"></div>
               <img
                 src="https://images.pexels.com/photos/1670723/pexels-photo-1670723.jpeg"
                 alt="Kháng Chiến Chống Pháp"
                 className="relative w-full h-[500px] object-cover shadow-strong group-hover:shadow-gold transition-all duration-500"
               />
-              <div className="absolute bottom-6 right-6 bg-charcoal-900/90 backdrop-blur-sm text-white px-6 py-3 font-serif text-lg">
+              <div className="absolute bottom-6 right-6 bg-brand-blue/90 backdrop-blur-sm text-white px-6 py-3 font-serif text-lg">
                 1945 - 1954
               </div>
             </div>
@@ -209,9 +250,9 @@ export default function Home({ onNavigate }: HomeProps) {
         </div>
       </section>
 
-      <section className="relative py-24 lg:py-32 px-4 bg-cream-50">
+      <section className="relative py-24 lg:py-32 px-4 bg-brand-sand">
         <div className="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
-          <div className="w-20 h-1 bg-vietnam-gold shadow-gold"></div>
+          <div className="w-20 h-1 bg-brand-blue shadow-brand"></div>
         </div>
 
         <div className="max-w-7xl mx-auto">
@@ -219,14 +260,14 @@ export default function Home({ onNavigate }: HomeProps) {
             <h2 className="section-title">
               Cửa Hàng Lưu Niệm
             </h2>
-            <div className="w-16 h-1 bg-vietnam-gold mx-auto mb-6"></div>
+            <div className="w-16 h-1 bg-brand-blue mx-auto mb-6"></div>
             <p className="section-subtitle">
               Sản phẩm lưu niệm lịch sử độc đáo từ các đối tác uy tín
             </p>
           </div>
 
           <div className="flex flex-wrap justify-center gap-3 mb-16 scroll-animate">
-            <button className="px-7 py-3 bg-vietnam-gold text-white font-sans text-sm tracking-wide shadow-soft hover:shadow-gold transition-all duration-300">
+            <button className="px-7 py-3 bg-brand-blue text-white font-sans text-sm tracking-wide shadow-soft hover:shadow-brand transition-all duration-300">
               Tất Cả
             </button>
             <button className="btn-outline">
@@ -250,67 +291,83 @@ export default function Home({ onNavigate }: HomeProps) {
           </div>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-10">
-            {[
-              { category: 'Đồ Trang Trí', tag: 'Bán Chạy' },
-              { category: 'Thời Trang', tag: 'Mới' },
-              { category: 'Phụ Kiện', tag: 'Độc Quyền' }
-            ].map((item, index) => (
-              <div
-                key={index}
-                className="card group cursor-pointer overflow-hidden fade-scroll"
-                onClick={() => onNavigate('shop')}
-              >
-                <div className="relative h-96 overflow-hidden bg-charcoal-100">
-                  <img
-                    src="https://images.pexels.com/photos/1040945/pexels-photo-1040945.jpeg"
-                    alt="Sản phẩm lưu niệm"
-                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-charcoal-900/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                  <div className="absolute top-5 left-5">
-                    <span className="bg-vietnam-red text-white px-4 py-1.5 text-xs font-sans tracking-wide shadow-soft">
-                      {item.category}
-                    </span>
-                  </div>
-                  <div className="absolute top-5 right-5">
-                    <span className="bg-vietnam-gold text-white px-4 py-1.5 text-xs font-sans tracking-wide shadow-soft">
-                      {item.tag}
-                    </span>
-                  </div>
-                  <div className="absolute bottom-5 right-5 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
-                    <button className="w-12 h-12 bg-white rounded-full flex items-center justify-center shadow-medium hover:shadow-strong transition-all duration-300">
-                      <ArrowRight className="text-charcoal-900" size={20} />
-                    </button>
-                  </div>
-                </div>
-                <div className="p-8">
-                  <p className="text-vietnam-gold-700 text-xs font-sans mb-3 uppercase tracking-[0.15em] font-semibold">
-                    {item.category}
-                  </p>
-                  <h3 className="text-2xl font-serif text-charcoal-900 mb-4 group-hover:text-vietnam-gold transition-colors duration-300">
-                    Tranh Nghệ Thuật Cách Mạng
-                  </h3>
-                  <p className="text-charcoal-600 mb-5 leading-relaxed">
-                    Tranh tái hiện những khoảnh khắc lịch sử hào hùng của dân tộc
-                  </p>
-                  <div className="flex items-center justify-between">
-                    <p className="text-3xl font-serif text-vietnam-gold-700">500.000₫</p>
-                    <div className="flex items-center space-x-1 text-vietnam-gold">
-                      <Star size={16} fill="currentColor" />
-                      <Star size={16} fill="currentColor" />
-                      <Star size={16} fill="currentColor" />
-                      <Star size={16} fill="currentColor" />
-                      <Star size={16} fill="currentColor" />
-                    </div>
-                  </div>
-                </div>
+            {productsLoading ? (
+              <div className="col-span-full flex justify-center py-12">
+                <div className="animate-spin w-12 h-12 border-4 border-brand-blue border-t-transparent rounded-full" />
               </div>
-            ))}
+            ) : (
+              <>
+                {productsError && (
+                  <div className="col-span-full text-center text-brand-muted text-sm">
+                    {productsError}
+                  </div>
+                )}
+
+                {featuredProducts.length === 0 ? (
+                  <div className="col-span-full text-center text-brand-muted">
+                    Chưa có sản phẩm nổi bật để hiển thị. Vui lòng truy cập cửa hàng để khám phá thêm.
+                  </div>
+                ) : (
+                  featuredProducts.map((product) => (
+                    <div
+                      key={product.id}
+                      className="card group cursor-pointer overflow-hidden fade-scroll"
+                      onClick={() => handleOpenProduct(product.id)}
+                    >
+                      <div className="relative h-96 overflow-hidden bg-brand-sky">
+                        <img
+                          src={product.image_url || 'https://images.pexels.com/photos/1040945/pexels-photo-1040945.jpeg'}
+                          alt={product.name}
+                          className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-charcoal-900/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                        <div className="absolute top-5 left-5">
+                          <span className="bg-brand-blue text-white px-4 py-1.5 text-xs font-sans tracking-wide shadow-soft">
+                            {product.category}
+                          </span>
+                        </div>
+                        <div className="absolute top-5 right-5">
+                          <span className="bg-brand-sand text-brand-text px-4 py-1.5 text-xs font-sans tracking-wide shadow-soft">
+                            Sản phẩm mới
+                          </span>
+                        </div>
+                        <div className="absolute bottom-5 right-5 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                          <button className="w-12 h-12 bg-white rounded-full flex items-center justify-center shadow-medium hover:shadow-strong transition-all duration-300">
+                            <ArrowRight className="text-charcoal-900" size={20} />
+                          </button>
+                        </div>
+                      </div>
+                      <div className="p-8">
+                        <p className="text-brand-blue text-xs font-sans mb-3 uppercase tracking-[0.15em] font-semibold">
+                          {product.category}
+                        </p>
+                        <h3 className="text-2xl font-serif text-charcoal-900 mb-4 group-hover:text-brand-blue transition-colors duration-300">
+                          {product.name}
+                        </h3>
+                        <p className="text-charcoal-600 mb-5 leading-relaxed line-clamp-3">
+                          {product.description}
+                        </p>
+                        <div className="flex items-center justify-between">
+                          <p className="text-3xl font-serif text-brand-blue">{formatPrice(product.price)}</p>
+                          <div className="flex items-center space-x-1 text-brand-blue">
+                            <Star size={16} fill="currentColor" />
+                            <Star size={16} fill="currentColor" />
+                            <Star size={16} fill="currentColor" />
+                            <Star size={16} fill="currentColor" />
+                            <Star size={16} fill="currentColor" />
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  ))
+                )}
+              </>
+            )}
           </div>
 
           <div className="text-center mt-16">
             <button
-              onClick={() => onNavigate('shop')}
+              onClick={() => navigate('/shop')}
               className="btn-secondary"
             >
               Xem Tất Cả Sản Phẩm
@@ -319,7 +376,7 @@ export default function Home({ onNavigate }: HomeProps) {
         </div>
       </section>
 
-      <section className="relative py-24 lg:py-32 px-4 bg-gradient-gold">
+      <section className="relative py-24 lg:py-32 px-4 bg-gradient-brand">
         <div className="max-w-5xl mx-auto text-center text-white fade-scroll">
           <div className="w-20 h-20 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center mx-auto mb-8 animate-float">
             <BookOpen className="text-white" size={40} />
@@ -332,11 +389,11 @@ export default function Home({ onNavigate }: HomeProps) {
             Việt Nam. Tiếp cận hàng nghìn khách hàng yêu thích lịch sử và văn hóa Việt Nam.
           </p>
           <div className="flex flex-wrap justify-center gap-5">
-            <button className="group px-10 py-5 bg-white text-vietnam-gold-700 font-sans text-sm tracking-[0.15em] uppercase hover:bg-cream-50 transition-all duration-300 shadow-strong flex items-center space-x-3">
+            <button className="group px-10 py-5 bg-white text-brand-blue font-sans text-sm tracking-[0.15em] uppercase hover:bg-brand-sand transition-all duration-300 shadow-strong flex items-center space-x-3">
               <span>Đăng Ký Bán Hàng</span>
               <ArrowRight className="transition-transform duration-300 group-hover:translate-x-1" size={20} />
             </button>
-            <button className="px-10 py-5 border-2 border-white text-white font-sans text-sm tracking-[0.15em] uppercase hover:bg-white hover:text-vietnam-gold-700 transition-all duration-300">
+            <button className="px-10 py-5 border-2 border-white text-white font-sans text-sm tracking-[0.15em] uppercase hover:bg-white hover:text-brand-blue transition-all duration-300">
               Tìm Hiểu Thêm
             </button>
           </div>
@@ -354,8 +411,8 @@ export default function Home({ onNavigate }: HomeProps) {
             ].map((stat, index) => (
               <div key={index} className="text-center fade-scroll group">
                 <div className="mb-4 transition-transform duration-300 group-hover:scale-110">
-                  <p className="text-5xl lg:text-6xl font-serif text-vietnam-gold-600 mb-2">{stat.value}</p>
-                  <div className="w-12 h-1 bg-vietnam-gold mx-auto"></div>
+                  <p className="text-5xl lg:text-6xl font-serif text-brand-blue mb-2">{stat.value}</p>
+                  <div className="w-12 h-1 bg-brand-blue mx-auto"></div>
                 </div>
                 <p className="text-charcoal-600 text-lg font-sans tracking-wide">{stat.label}</p>
               </div>
